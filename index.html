@@ -1,0 +1,1664 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hareudang Bandung - Database Anggota & Aset Media</title>
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            hareudang: {
+              50: '#f0fdf4',
+              100: '#dcfce7',
+              200: '#bbf7d0',
+              500: '#22c55e',
+              600: '#16a34a',
+              700: '#15803d',
+              800: '#166534',
+              900: '#14532d',
+            }
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+    }
+    .custom-scrollbar::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    .custom-scrollbar::-webkit-scrollbar-thumb {
+      background: #cbd5e1;
+      border-radius: 9999px;
+    }
+  </style>
+</head>
+<body class="bg-[#F8FAF9] text-slate-900 min-h-screen flex flex-col antialiased selection:bg-emerald-600 selection:text-white">
+
+  <!-- Header & Navbar -->
+  <header class="sticky top-0 z-40 bg-white/95 backdrop-blur-md border-b border-emerald-100 shadow-sm">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+      <div class="flex items-center gap-3">
+        <!-- Logo -->
+        <div class="flex items-center justify-center">
+          <img 
+            src="logo.png" 
+            alt="Logo Hareudang" 
+            class="h-9 w-auto max-w-[140px] object-contain"
+            onerror="this.style.display='none'; document.getElementById('fallbackLogo').style.display='flex';"
+          >
+          <div id="fallbackLogo" style="display:none;" class="w-9 h-9 bg-emerald-600 rounded-xl items-center justify-center text-white shadow-sm">
+            <i data-lucide="flame" class="w-5 h-5"></i>
+          </div>
+        </div>
+
+        <div class="h-7 w-[1px] bg-slate-200 hidden sm:block"></div>
+
+        <div>
+          <div class="flex items-center gap-2">
+            <h1 class="text-base font-extrabold text-slate-900 leading-tight tracking-tight">Hareudang Bandung</h1>
+          </div>
+          <p class="text-xs text-slate-500 font-medium">Direktori Anggota & Aset Media Kreatif</p>
+        </div>
+      </div>
+
+      <div class="flex items-center gap-2 sm:gap-2.5">
+        <!-- Tombol Aksi Tab Anggota -->
+        <div id="memberHeaderActions" class="flex items-center gap-2">
+          <button id="btnOpenBulkModal" class="flex items-center gap-1.5 px-3 py-2 rounded-xl bg-emerald-50 hover:bg-emerald-100 text-emerald-800 text-xs sm:text-sm font-bold border border-emerald-200 transition active:scale-95">
+            <i data-lucide="list-plus" class="w-4 h-4"></i>
+            <span class="hidden sm:inline">Import Banyak</span>
+          </button>
+          <button id="btnOpenModal" class="flex items-center gap-1.5 px-3 sm:px-4 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs sm:text-sm font-semibold shadow-md shadow-emerald-200 hover:shadow transition active:scale-95">
+            <i data-lucide="plus" class="w-4 h-4"></i>
+            <span>Tambah</span>
+          </button>
+        </div>
+
+        <!-- Tombol Aksi Tab Aset -->
+        <div id="assetHeaderActions" class="hidden items-center gap-2">
+          <button id="btnOpenAddAsset" class="flex items-center gap-1.5 px-3 sm:px-4 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs sm:text-sm font-semibold shadow-md shadow-emerald-200 hover:shadow transition active:scale-95">
+            <i data-lucide="upload-cloud" class="w-4 h-4"></i>
+            <span>Upload Aset Baru</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Sub-Navbar: Tab Switcher -->
+  <div class="bg-white border-b border-emerald-100">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center gap-3 py-2">
+      <button id="tabBtnMembers" class="flex items-center gap-2 px-4 py-2 rounded-xl text-xs sm:text-sm font-bold transition bg-emerald-600 text-white shadow-sm shadow-emerald-200">
+        <i data-lucide="users" class="w-4 h-4"></i>
+        <span>Database Anggota</span>
+        <span id="memberCountBadge" class="ml-1 px-1.5 py-0.2 rounded-full bg-white/20 text-[10px]">0</span>
+      </button>
+
+      <button id="tabBtnAssets" class="flex items-center gap-2 px-4 py-2 rounded-xl text-xs sm:text-sm font-bold transition bg-slate-100 text-slate-700 hover:bg-emerald-50 hover:text-emerald-800">
+        <i data-lucide="palette" class="w-4 h-4"></i>
+        <span>Aset Desain & Logo</span>
+        <span id="assetCountBadge" class="ml-1 px-1.5 py-0.2 rounded-full bg-slate-200 text-slate-700 text-[10px]">0</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- Main Content -->
+  <main class="flex-1 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 w-full space-y-6">
+
+    <!-- ========================================== -->
+    <!-- VIEW 1: DATABASE ANGGOTA                   -->
+    <!-- ========================================== -->
+    <div id="viewMembers" class="space-y-6">
+      <!-- Top Banner Anggota -->
+      <div class="bg-gradient-to-r from-emerald-900 via-emerald-800 to-teal-950 rounded-2xl p-6 sm:p-8 text-white relative overflow-hidden shadow-lg border border-emerald-800">
+        <div class="absolute -right-8 -bottom-10 w-72 h-72 bg-emerald-500/15 rounded-full blur-3xl pointer-events-none"></div>
+        <div class="relative z-10 max-w-2xl space-y-2">
+          <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold bg-emerald-500/20 text-emerald-200 border border-emerald-400/30">
+            <i data-lucide="sparkles" class="w-3.5 h-3.5 text-emerald-300"></i> Tool Divisi Media Kreatif
+          </span>
+          <h2 class="text-xl sm:text-2xl font-extrabold tracking-tight">Katalog Anggota & Asset Foto Asli</h2>
+          <p class="text-xs sm:text-sm text-emerald-100/90 leading-relaxed">
+            Tinggal klik untuk salin nama, role, divisi, atau kampus asal tanpa salah ketik dan unduh foto resolusi tinggi untuk kebutuhan poster delegasi, flyer ucapan, atau postingan feed.
+          </p>
+        </div>
+      </div>
+
+      <!-- Toolbar Anggota -->
+      <div class="bg-white p-4 rounded-xl border border-emerald-100 shadow-sm flex flex-col lg:flex-row gap-3 items-center justify-between">
+        <div class="relative w-full lg:w-72">
+          <i data-lucide="search" class="w-4 h-4 text-emerald-600 absolute left-3 top-1/2 -translate-y-1/2"></i>
+          <input 
+            type="text" 
+            id="searchInput" 
+            placeholder="Cari nama, role, kampus..." 
+            class="w-full pl-9 pr-4 py-2 bg-emerald-50/40 border border-emerald-200 rounded-lg text-sm text-slate-800 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:bg-white transition"
+          >
+        </div>
+
+        <div class="flex items-center gap-2.5 w-full lg:w-auto overflow-x-auto custom-scrollbar pb-1 lg:pb-0">
+          <div class="flex items-center gap-1.5">
+            <span class="text-xs font-bold text-slate-600 whitespace-nowrap">Periode:</span>
+            <select id="periodFilter" class="px-2.5 py-2 bg-emerald-50/40 border border-emerald-200 rounded-lg text-xs sm:text-sm text-slate-700 font-semibold focus:outline-none focus:ring-2 focus:ring-emerald-500">
+              <option value="ALL">Semua Periode</option>
+              <option value="2026/2027" selected>2026/2027</option>
+            </select>
+          </div>
+
+          <div class="flex items-center gap-1.5">
+            <span class="text-xs font-bold text-slate-600 whitespace-nowrap">Divisi:</span>
+            <select id="divisionFilter" class="px-2.5 py-2 bg-emerald-50/40 border border-emerald-200 rounded-lg text-xs sm:text-sm text-slate-700 font-semibold focus:outline-none focus:ring-2 focus:ring-emerald-500 max-w-[200px] truncate">
+              <option value="ALL">Semua Direktorat / Unit</option>
+            </select>
+          </div>
+
+          <button id="btnRefresh" title="Refresh Data" class="p-2 border border-emerald-200 rounded-lg hover:bg-emerald-50 text-emerald-700 transition flex items-center justify-center flex-shrink-0">
+            <i data-lucide="refresh-cw" class="w-4 h-4" id="refreshIcon"></i>
+          </button>
+        </div>
+      </div>
+
+      <!-- Grid Kartu Anggota -->
+      <div id="membersContainer" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5">
+        <div class="col-span-full py-16 flex flex-col items-center justify-center text-center space-y-3">
+          <div class="w-8 h-8 border-4 border-emerald-600 border-t-transparent rounded-full animate-spin"></div>
+          <p class="text-sm text-slate-500 font-medium">Memuat data anggota...</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- ========================================== -->
+    <!-- VIEW 2: ASET DESAIN & LOGO                 -->
+    <!-- ========================================== -->
+    <div id="viewAssets" class="space-y-6 hidden">
+      <!-- Top Banner Aset -->
+      <div class="bg-gradient-to-r from-teal-900 via-emerald-800 to-slate-900 rounded-2xl p-6 sm:p-8 text-white relative overflow-hidden shadow-lg border border-emerald-800">
+        <div class="absolute -right-8 -bottom-10 w-72 h-72 bg-teal-500/15 rounded-full blur-3xl pointer-events-none"></div>
+        <div class="relative z-10 max-w-2xl space-y-2">
+          <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold bg-teal-500/20 text-teal-200 border border-teal-400/30">
+            <i data-lucide="folder-git-2" class="w-3.5 h-3.5 text-teal-300"></i> Official Brand Assets & Media Kit
+          </span>
+          <h2 class="text-xl sm:text-2xl font-extrabold tracking-tight">Koleksi Aset & Identitas Visual Hareudang</h2>
+          <p class="text-xs sm:text-sm text-teal-100/90 leading-relaxed">
+            Repository logo resmi resolusi tinggi, watermark, palet warna, tipografi, dan template desain siap pakai. Klik unduh file asli atau salin tautan langsung.
+          </p>
+        </div>
+      </div>
+
+      <!-- Toolbar Aset -->
+      <div class="bg-white p-4 rounded-xl border border-emerald-100 shadow-sm flex flex-col sm:flex-row gap-3 items-center justify-between">
+        <div class="relative w-full sm:w-80">
+          <i data-lucide="search" class="w-4 h-4 text-emerald-600 absolute left-3 top-1/2 -translate-y-1/2"></i>
+          <input 
+            type="text" 
+            id="searchAssetInput" 
+            placeholder="Cari nama aset, format, atau kategori..." 
+            class="w-full pl-9 pr-4 py-2 bg-emerald-50/40 border border-emerald-200 rounded-lg text-sm text-slate-800 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:bg-white transition"
+          >
+        </div>
+
+        <div class="flex items-center gap-2.5 w-full sm:w-auto">
+          <span class="text-xs font-bold text-slate-600 whitespace-nowrap">Kategori:</span>
+          <select id="assetCategoryFilter" class="px-3 py-2 bg-emerald-50/40 border border-emerald-200 rounded-lg text-xs sm:text-sm text-slate-700 font-semibold focus:outline-none focus:ring-2 focus:ring-emerald-500">
+            <option value="ALL">Semua Kategori</option>
+            <option value="Logo & Branding">Logo & Branding</option>
+            <option value="Watermark & Badge">Watermark & Badge</option>
+            <option value="Template Desain">Template Desain</option>
+            <option value="Elemen & Vektor">Elemen & Vektor</option>
+            <option value="Font & Media Kit">Font & Media Kit</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Grid Kartu Aset Desain -->
+      <div id="assetsContainer" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5">
+        <div class="col-span-full py-16 flex flex-col items-center justify-center text-center space-y-3">
+          <div class="w-8 h-8 border-4 border-emerald-600 border-t-transparent rounded-full animate-spin"></div>
+          <p class="text-sm text-slate-500 font-medium">Memuat aset desain...</p>
+        </div>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- ========================================== -->
+  <!-- DATALISTS FORM                             -->
+  <!-- ========================================== -->
+  <datalist id="periodSuggestions">
+    <option value="2026/2027"></option>
+    <option value="2025/2026"></option>
+    <option value="2027/2028"></option>
+  </datalist>
+
+  <datalist id="divisionSuggestions">
+    <option value="Executive Director"></option>
+    <option value="Secretariat & Finance"></option>
+    <option value="Directorate of Human Capital Development"></option>
+    <option value="Directorate of Research & Policy"></option>
+    <option value="Directorate of Community Resillience"></option>
+    <option value="Directorate of Business Advisory"></option>
+    <option value="Directorate of Partnership Communication"></option>
+    <option value="Directorate of Data Intelligent & Technology"></option>
+    <option value="Directorate of Media Creative - Graphic Design"></option>
+    <option value="Directorate of Media Creative - Visual Production"></option>
+  </datalist>
+
+  <datalist id="roleSuggestions">
+    <option value="Executive Director"></option>
+    <option value="Director"></option>
+    <option value="Head Unit"></option>
+    <option value="Secretary"></option>
+    <option value="Finance"></option>
+    <option value="Graphic Design Associate"></option>
+    <option value="Graphic Design Assistant"></option>
+    <option value="Visual Production Associate"></option>
+    <option value="Technology & Systems Associate"></option>
+    <option value="Data Intelligence Analyst"></option>
+    <option value="Community Development Associate"></option>
+    <option value="Policy Associate"></option>
+    <option value="Research Associate"></option>
+    <option value="Partnership Associate"></option>
+    <option value="Staff"></option>
+  </datalist>
+
+  <datalist id="universitySuggestions">
+    <option value="Universitas Komputer Indonesia"></option>
+    <option value="Institut Teknologi Nasional Bandung"></option>
+    <option value="Universitas Padjajaran"></option>
+    <option value="Universitas Jenderal Achmad Yani"></option>
+    <option value="UIN Sunan Gunung Djati Bandung"></option>
+    <option value="Universitas Muhammadiyah Bandung"></option>
+    <option value="Institut Teknologi Bandung"></option>
+    <option value="Universitas Pendidikan Indonesia"></option>
+    <option value="Politeknik Manufaktur Negeri Bandung"></option>
+    <option value="Sekolah Tinggi Hukum Bandung"></option>
+    <option value="Universitas Pasundan"></option>
+    <option value="International Women University"></option>
+    <option value="UIN Siber Syekh Nurjati Cirebon"></option>
+    <option value="Politeknik Negeri Bandung"></option>
+    <option value="Institut Pertanian Bogor"></option>
+    <option value="Universitas Terbuka"></option>
+    <option value="Institut Koperasi Indonesia"></option>
+    <option value="Politeknik Kesejahteraan Sosial Bandung"></option>
+    <option value="Poltekkes Kemenkes Bandung"></option>
+  </datalist>
+
+  <!-- Modal: Tambah Anggota Satuan -->
+  <div id="modalAdd" class="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-sm hidden items-center justify-center p-4 overflow-y-auto">
+    <div class="bg-white rounded-2xl max-w-lg w-full border border-emerald-100 shadow-2xl overflow-hidden animate-in fade-in zoom-in-95 duration-150">
+      <div class="px-6 py-4 border-b border-emerald-100 flex items-center justify-between bg-emerald-50/50">
+        <div class="flex items-center gap-2.5">
+          <div class="w-8 h-8 rounded-lg bg-emerald-600 text-white flex items-center justify-center font-bold">
+            <i data-lucide="user-plus" class="w-4 h-4"></i>
+          </div>
+          <div>
+            <h3 class="font-bold text-slate-800 text-sm sm:text-base">Tambah Anggota Baru</h3>
+            <p class="text-xs text-slate-500">Foto opsional, bisa diunggah menyusul</p>
+          </div>
+        </div>
+        <button id="btnCloseModal" class="p-1 rounded-lg text-slate-400 hover:text-slate-600 hover:bg-slate-100">
+          <i data-lucide="x" class="w-5 h-5"></i>
+        </button>
+      </div>
+
+      <form id="formAddMember" class="p-6 space-y-4">
+        <div>
+          <label class="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-1">Nama Lengkap *</label>
+          <input type="text" id="inputNama" required placeholder="Contoh: Muhammad Salman, S.Ds." class="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:bg-white transition">
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          <div>
+            <label class="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-1">Direktorat / Unit *</label>
+            <input type="text" id="inputDivisi" required list="divisionSuggestions" placeholder="Pilih Direktorat..." class="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:bg-white transition">
+          </div>
+          <div>
+            <label class="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-1">Role / Jabatan *</label>
+            <input type="text" id="inputRole" required list="roleSuggestions" placeholder="Director, Staff..." class="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:bg-white transition">
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          <div>
+            <label class="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-1">Universitas / Instansi *</label>
+            <input type="text" id="inputUniversitas" required list="universitySuggestions" placeholder="Asal Kampus..." class="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:bg-white transition">
+          </div>
+          <div>
+            <label class="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-1">Periode Kepengurusan *</label>
+            <input type="text" id="inputPeriode" required list="periodSuggestions" value="2026/2027" placeholder="Contoh: 2026/2027" class="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm font-semibold text-emerald-800 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:bg-white transition">
+          </div>
+        </div>
+
+        <div>
+          <label class="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-1">File Foto HD (Opsional)</label>
+          <div id="dropZone" class="border-2 border-dashed border-emerald-200 hover:border-emerald-500 rounded-xl p-4 text-center cursor-pointer transition bg-emerald-50/20 hover:bg-emerald-50/40">
+            <input type="file" id="inputFile" accept="image/*" class="hidden">
+            <div id="uploadPlaceholder" class="space-y-1 py-1">
+              <i data-lucide="upload-cloud" class="w-7 h-7 text-emerald-600 mx-auto"></i>
+              <p class="text-xs font-semibold text-slate-700">Klik untuk upload foto</p>
+            </div>
+            <div id="uploadPreview" class="hidden flex items-center gap-3 text-left">
+              <img id="previewImg" src="" alt="Preview" class="w-12 h-12 rounded-lg object-cover border border-emerald-200">
+              <div class="flex-1 min-w-0">
+                <p id="previewName" class="text-xs font-bold text-slate-800 truncate"></p>
+                <button type="button" id="btnRemoveFile" class="text-[11px] text-rose-600 font-bold hover:underline">Hapus Foto</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="pt-3 flex gap-2">
+          <button type="button" id="btnCancelModal" class="flex-1 px-4 py-2.5 rounded-xl border border-slate-200 text-slate-700 text-xs sm:text-sm font-semibold hover:bg-slate-100 transition">Batal</button>
+          <button type="submit" id="btnSubmitForm" class="flex-1 px-4 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs sm:text-sm font-semibold shadow-md shadow-emerald-200 flex items-center justify-center gap-2 transition disabled:opacity-50">
+            <i data-lucide="upload" class="w-4 h-4"></i>
+            <span id="submitBtnText">Simpan Data</span>
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Modal: Import Banyak Sekaligus -->
+  <div id="modalBulk" class="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-sm hidden items-center justify-center p-4 overflow-y-auto">
+    <div class="bg-white rounded-2xl max-w-xl w-full border border-emerald-100 shadow-2xl overflow-hidden animate-in fade-in zoom-in-95 duration-150">
+      <div class="px-6 py-4 border-b border-emerald-100 flex items-center justify-between bg-emerald-50/50">
+        <div class="flex items-center gap-2.5">
+          <div class="w-8 h-8 rounded-lg bg-emerald-600 text-white flex items-center justify-center font-bold">
+            <i data-lucide="list-plus" class="w-4 h-4"></i>
+          </div>
+          <div>
+            <h3 class="font-bold text-slate-800 text-sm sm:text-base">Import Banyak Anggota Sekaligus</h3>
+            <p class="text-xs text-slate-500">Bisa langsung copas tabel dari PDF atau Excel</p>
+          </div>
+        </div>
+        <button id="btnCloseBulk" class="p-1 rounded-lg text-slate-400 hover:text-slate-600 hover:bg-slate-100">
+          <i data-lucide="x" class="w-5 h-5"></i>
+        </button>
+      </div>
+
+      <div class="p-6 space-y-4">
+        <div class="bg-emerald-50/50 p-3 rounded-xl border border-emerald-100 flex items-center justify-between gap-3">
+          <div>
+            <label class="block text-xs font-bold text-emerald-900">Periode untuk Hasil Impor:</label>
+            <p class="text-[11px] text-slate-500">Otomatis dipasang jika baris data tidak memuat kolom periode</p>
+          </div>
+          <input 
+            type="text" 
+            id="bulkDefaultPeriode" 
+            value="2026/2027" 
+            list="periodSuggestions" 
+            class="w-32 px-3 py-1.5 bg-white border border-emerald-200 rounded-lg text-xs font-bold text-emerald-800 focus:outline-none focus:ring-2 focus:ring-emerald-500 text-center"
+          >
+        </div>
+
+        <div>
+          <label class="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-1">Daftar Anggota (1 Baris = 1 Anggota)</label>
+          <textarea 
+            id="bulkInputText" 
+            rows="8" 
+            placeholder="Format: Nama, Direktorat, Role, Universitas Asal, Periode (Opsional)&#10;&#10;Contoh:&#10;Muhammad Valdis Aldevhan, Executive Director, Executive Director, Universitas Komputer Indonesia&#10;Mathla Nurrahma, Secretariat & Finance, Secretary, Institut Teknologi Nasional Bandung"
+            class="w-full p-3.5 bg-slate-50 border border-slate-200 rounded-xl text-xs font-mono focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:bg-white transition custom-scrollbar"
+          ></textarea>
+        </div>
+
+        <div id="bulkPreviewCount" class="text-xs font-bold text-emerald-800 bg-emerald-50 px-3 py-2 rounded-lg border border-emerald-200 hidden">
+          Terdeteksi <span id="parsedCount">0</span> anggota siap diimpor.
+        </div>
+
+        <div class="pt-2 flex gap-2">
+          <button type="button" id="btnCancelBulk" class="flex-1 px-4 py-2.5 rounded-xl border border-slate-200 text-slate-700 text-xs sm:text-sm font-semibold hover:bg-slate-100 transition">Batal</button>
+          <button type="button" id="btnSubmitBulk" class="flex-1 px-4 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs sm:text-sm font-semibold shadow-md shadow-emerald-200 flex items-center justify-center gap-2 transition disabled:opacity-50">
+            <i data-lucide="check-check" class="w-4 h-4"></i>
+            <span id="bulkBtnText">Mulai Import</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal: Edit Anggota -->
+  <div id="modalEdit" class="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-sm hidden items-center justify-center p-4 overflow-y-auto">
+    <div class="bg-white rounded-2xl max-w-lg w-full border border-emerald-100 shadow-2xl overflow-hidden animate-in fade-in zoom-in-95 duration-150">
+      <div class="px-6 py-4 border-b border-emerald-100 flex items-center justify-between bg-emerald-50/50">
+        <div class="flex items-center gap-2.5">
+          <div class="w-8 h-8 rounded-lg bg-emerald-600 text-white flex items-center justify-center font-bold">
+            <i data-lucide="edit" class="w-4 h-4"></i>
+          </div>
+          <div>
+            <h3 class="font-bold text-slate-800 text-sm sm:text-base">Edit Data & Foto</h3>
+            <p class="text-xs text-slate-500">Perbarui profil, periode, atau unggah foto asli</p>
+          </div>
+        </div>
+        <button id="btnCloseEdit" class="p-1 rounded-lg text-slate-400 hover:text-slate-600 hover:bg-slate-100">
+          <i data-lucide="x" class="w-5 h-5"></i>
+        </button>
+      </div>
+
+      <form id="formEditMember" class="p-6 space-y-4">
+        <input type="hidden" id="editRowIndex">
+        <input type="hidden" id="editOriginalNama">
+
+        <div>
+          <label class="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-1">Nama Lengkap *</label>
+          <input type="text" id="editNama" required class="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:bg-white transition">
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          <div>
+            <label class="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-1">Direktorat / Unit *</label>
+            <input type="text" id="editDivisi" required list="divisionSuggestions" class="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:bg-white transition">
+          </div>
+          <div>
+            <label class="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-1">Role / Jabatan *</label>
+            <input type="text" id="editRole" required list="roleSuggestions" class="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:bg-white transition">
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          <div>
+            <label class="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-1">Universitas / Instansi *</label>
+            <input type="text" id="editUniversitas" required list="universitySuggestions" class="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:bg-white transition">
+          </div>
+          <div>
+            <label class="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-1">Periode *</label>
+            <input type="text" id="editPeriode" required list="periodSuggestions" class="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm font-semibold text-emerald-800 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:bg-white transition">
+          </div>
+        </div>
+
+        <div>
+          <label class="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-1">Upload / Ganti Foto HD</label>
+          <div id="dropZoneEdit" class="border-2 border-dashed border-emerald-200 hover:border-emerald-500 rounded-xl p-4 text-center cursor-pointer transition bg-emerald-50/20 hover:bg-emerald-50/40">
+            <input type="file" id="inputFileEdit" accept="image/*" class="hidden">
+            <div id="uploadPlaceholderEdit" class="space-y-1 py-1">
+              <i data-lucide="upload-cloud" class="w-7 h-7 text-emerald-600 mx-auto"></i>
+              <p class="text-xs font-semibold text-slate-700">Klik untuk upload foto baru</p>
+            </div>
+            <div id="uploadPreviewEdit" class="hidden flex items-center gap-3 text-left">
+              <img id="previewImgEdit" src="" alt="Preview" class="w-12 h-12 rounded-lg object-cover border border-emerald-200">
+              <div class="flex-1 min-w-0">
+                <p id="previewNameEdit" class="text-xs font-bold text-slate-800 truncate"></p>
+                <button type="button" id="btnRemoveFileEdit" class="text-[11px] text-rose-600 font-bold hover:underline">Hapus Foto</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="pt-3 flex gap-2">
+          <button type="button" id="btnCancelEdit" class="flex-1 px-4 py-2.5 rounded-xl border border-slate-200 text-slate-700 text-xs sm:text-sm font-semibold hover:bg-slate-100 transition">Batal</button>
+          <button type="submit" id="btnSubmitEdit" class="flex-1 px-4 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs sm:text-sm font-semibold shadow-md shadow-emerald-200 flex items-center justify-center gap-2 transition disabled:opacity-50">
+            <i data-lucide="save" class="w-4 h-4"></i>
+            <span id="editBtnText">Simpan Perubahan</span>
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Modal: Upload Aset Desain Baru -->
+  <div id="modalAddAsset" class="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-sm hidden items-center justify-center p-4 overflow-y-auto">
+    <div class="bg-white rounded-2xl max-w-lg w-full border border-emerald-100 shadow-2xl overflow-hidden animate-in fade-in zoom-in-95 duration-150">
+      <div class="px-6 py-4 border-b border-emerald-100 flex items-center justify-between bg-emerald-50/50">
+        <div class="flex items-center gap-2.5">
+          <div class="w-8 h-8 rounded-lg bg-emerald-600 text-white flex items-center justify-center font-bold">
+            <i data-lucide="palette" class="w-4 h-4"></i>
+          </div>
+          <div>
+            <h3 class="font-bold text-slate-800 text-sm sm:text-base">Upload Aset Desain Baru</h3>
+            <p class="text-xs text-slate-500">Logo, Watermark, Banner, atau File Grafis</p>
+          </div>
+        </div>
+        <button id="btnCloseAddAsset" class="p-1 rounded-lg text-slate-400 hover:text-slate-600 hover:bg-slate-100">
+          <i data-lucide="x" class="w-5 h-5"></i>
+        </button>
+      </div>
+
+      <form id="formAddAsset" class="p-6 space-y-4">
+        <div>
+          <label class="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-1">Nama Aset *</label>
+          <input type="text" id="assetNama" required placeholder="Contoh: Logo Hareudang Putih Transparan (PNG HD)" class="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:bg-white transition">
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          <div>
+            <label class="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-1">Kategori Aset *</label>
+            <select id="assetKategori" required class="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:bg-white transition">
+              <option value="Logo & Branding">Logo & Branding</option>
+              <option value="Watermark & Badge">Watermark & Badge</option>
+              <option value="Template Desain">Template Desain</option>
+              <option value="Elemen & Vektor">Elemen & Vektor</option>
+              <option value="Font & Media Kit">Font & Media Kit</option>
+            </select>
+          </div>
+          <div>
+            <label class="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-1">Format File *</label>
+            <input type="text" id="assetFormat" required placeholder="PNG, SVG, AI, PDF, ZIP..." class="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm font-semibold uppercase focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:bg-white transition">
+          </div>
+        </div>
+
+        <div>
+          <label class="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-1">File Aset *</label>
+          <div id="dropZoneAsset" class="border-2 border-dashed border-emerald-200 hover:border-emerald-500 rounded-xl p-4 text-center cursor-pointer transition bg-emerald-50/20 hover:bg-emerald-50/40">
+            <input type="file" id="inputFileAsset" required class="hidden">
+            <div id="uploadPlaceholderAsset" class="space-y-1 py-2">
+              <i data-lucide="upload-cloud" class="w-8 h-8 text-emerald-600 mx-auto"></i>
+              <p class="text-xs font-semibold text-slate-700">Klik atau geser file aset ke sini</p>
+              <p class="text-[10px] text-slate-400">PNG, SVG, JPG, PDF, ZIP, AI, dsb.</p>
+            </div>
+            <div id="uploadPreviewAsset" class="hidden flex items-center gap-3 text-left">
+              <div class="w-12 h-12 rounded-lg bg-emerald-100 text-emerald-800 flex items-center justify-center font-extrabold text-sm uppercase" id="previewAssetBadge">
+                FILE
+              </div>
+              <div class="flex-1 min-w-0">
+                <p id="previewAssetName" class="text-xs font-bold text-slate-800 truncate"></p>
+                <p id="previewAssetSize" class="text-[11px] text-slate-500"></p>
+                <button type="button" id="btnRemoveFileAsset" class="text-[11px] text-rose-600 font-bold hover:underline">Ganti File</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="pt-3 flex gap-2">
+          <button type="button" id="btnCancelAddAsset" class="flex-1 px-4 py-2.5 rounded-xl border border-slate-200 text-slate-700 text-xs sm:text-sm font-semibold hover:bg-slate-100 transition">Batal</button>
+          <button type="submit" id="btnSubmitAsset" class="flex-1 px-4 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs sm:text-sm font-semibold shadow-md shadow-emerald-200 flex items-center justify-center gap-2 transition disabled:opacity-50">
+            <i data-lucide="upload" class="w-4 h-4"></i>
+            <span id="submitAssetBtnText">Simpan Aset</span>
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Modal: Hapus Anggota -->
+  <div id="modalDelete" class="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-sm hidden items-center justify-center p-4 overflow-y-auto">
+    <div class="bg-white rounded-2xl max-w-sm w-full border border-rose-100 shadow-2xl overflow-hidden p-6 text-center space-y-4">
+      <div class="w-12 h-12 rounded-2xl bg-rose-50 text-rose-600 flex items-center justify-center mx-auto border border-rose-100">
+        <i data-lucide="trash-2" class="w-6 h-6"></i>
+      </div>
+      <div>
+        <h3 class="font-extrabold text-slate-900 text-base">Hapus Anggota?</h3>
+        <p class="text-xs text-slate-500 mt-1 leading-relaxed">
+          Kamu akan menghapus <span id="delMemberName" class="font-bold text-slate-800"></span>. Baris di spreadsheet dan foto di Google Drive akan ikut terhapus.
+        </p>
+      </div>
+      <input type="hidden" id="delRowIndex">
+      <input type="hidden" id="delTargetNama">
+
+      <div class="flex gap-2 pt-1">
+        <button type="button" id="btnCancelDelete" class="flex-1 py-2 rounded-xl border border-slate-200 text-slate-700 text-xs font-semibold hover:bg-slate-100 transition">Batal</button>
+        <button type="button" id="btnConfirmDelete" class="flex-1 py-2 rounded-xl bg-rose-600 hover:bg-rose-700 text-white text-xs font-semibold shadow-md shadow-rose-100 transition">Hapus</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal: Hapus Aset Desain -->
+  <div id="modalDeleteAsset" class="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-sm hidden items-center justify-center p-4 overflow-y-auto">
+    <div class="bg-white rounded-2xl max-w-sm w-full border border-rose-100 shadow-2xl overflow-hidden p-6 text-center space-y-4">
+      <div class="w-12 h-12 rounded-2xl bg-rose-50 text-rose-600 flex items-center justify-center mx-auto border border-rose-100">
+        <i data-lucide="trash-2" class="w-6 h-6"></i>
+      </div>
+      <div>
+        <h3 class="font-extrabold text-slate-900 text-base">Hapus Aset Ini?</h3>
+        <p class="text-xs text-slate-500 mt-1 leading-relaxed">
+          Aset <span id="delAssetName" class="font-bold text-slate-800"></span> akan dihapus dari sheet dan file di Google Drive akan dibersihkan.
+        </p>
+      </div>
+      <input type="hidden" id="delAssetRowIndex">
+
+      <div class="flex gap-2 pt-1">
+        <button type="button" id="btnCancelDeleteAsset" class="flex-1 py-2 rounded-xl border border-slate-200 text-slate-700 text-xs font-semibold hover:bg-slate-100 transition">Batal</button>
+        <button type="button" id="btnConfirmDeleteAsset" class="flex-1 py-2 rounded-xl bg-rose-600 hover:bg-rose-700 text-white text-xs font-semibold shadow-md shadow-rose-100 transition">Hapus Aset</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Notification -->
+  <div id="toast" class="fixed bottom-6 right-6 z-50 transform translate-y-20 opacity-0 transition-all duration-300 pointer-events-auto flex items-center gap-2 px-4 py-3 rounded-xl shadow-xl border">
+    <i id="toastIcon" data-lucide="check-circle" class="w-4 h-4"></i>
+    <span id="toastMsg" class="text-xs font-bold"></span>
+  </div>
+
+  <!-- JavaScript Logic -->
+  <script>
+    // URL WEB APP TERKUNCI PERMANEN
+    const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwEw4os4qd4XhDJBIu7amXU3NSIeCs9DAox1x8C-cdGp4j3QM9cOt7H-cxzzbeXRJ_X/exec';
+    
+    let allMembers = [];
+    let allAssets = [];
+    let currentTab = 'members'; // 'members' | 'assets'
+    
+    // Upload State
+    let addFileBase64 = null, addFileName = '', addMimeType = '';
+    let editFileBase64 = null, editFileName = '', editMimeType = '';
+    let assetFileBase64 = null, assetFileName = '', assetMimeType = '';
+
+    document.addEventListener('DOMContentLoaded', () => {
+      lucide.createIcons();
+      setupTabs();
+      loadData();
+      setupEventListeners();
+    });
+
+    function setupTabs() {
+      const btnMembers = document.getElementById('tabBtnMembers');
+      const btnAssets = document.getElementById('tabBtnAssets');
+      const viewMembers = document.getElementById('viewMembers');
+      const viewAssets = document.getElementById('viewAssets');
+      const memberHeader = document.getElementById('memberHeaderActions');
+      const assetHeader = document.getElementById('assetHeaderActions');
+
+      btnMembers.addEventListener('click', () => {
+        currentTab = 'members';
+        btnMembers.className = 'flex items-center gap-2 px-4 py-2 rounded-xl text-xs sm:text-sm font-bold transition bg-emerald-600 text-white shadow-sm shadow-emerald-200';
+        btnAssets.className = 'flex items-center gap-2 px-4 py-2 rounded-xl text-xs sm:text-sm font-bold transition bg-slate-100 text-slate-700 hover:bg-emerald-50 hover:text-emerald-800';
+        viewMembers.classList.remove('hidden');
+        viewAssets.classList.add('hidden');
+        memberHeader.classList.remove('hidden');
+        memberHeader.classList.add('flex');
+        assetHeader.classList.add('hidden');
+        assetHeader.classList.remove('flex');
+      });
+
+      btnAssets.addEventListener('click', () => {
+        currentTab = 'assets';
+        btnAssets.className = 'flex items-center gap-2 px-4 py-2 rounded-xl text-xs sm:text-sm font-bold transition bg-emerald-600 text-white shadow-sm shadow-emerald-200';
+        btnMembers.className = 'flex items-center gap-2 px-4 py-2 rounded-xl text-xs sm:text-sm font-bold transition bg-slate-100 text-slate-700 hover:bg-emerald-50 hover:text-emerald-800';
+        viewAssets.classList.remove('hidden');
+        viewMembers.classList.add('hidden');
+        assetHeader.classList.remove('hidden');
+        assetHeader.classList.add('flex');
+        memberHeader.classList.add('hidden');
+        memberHeader.classList.remove('flex');
+      });
+    }
+
+    async function loadData() {
+      const refreshIcon = document.getElementById('refreshIcon');
+      refreshIcon.classList.add('animate-spin');
+
+      try {
+        const res = await fetch(SCRIPT_URL);
+        const json = await res.json();
+        if (json.success) {
+          allMembers = json.members || json.data || [];
+          allAssets = json.assets || [];
+          updateCounters();
+          populateFilters(allMembers);
+          filterMembers();
+          renderAssets(allAssets);
+        } else {
+          showToast('Format respon script tidak sesuai', 'error');
+        }
+      } catch (err) {
+        console.error(err);
+        showToast('Gagal memuat data, periksa koneksi internet!', 'error');
+      } finally {
+        refreshIcon.classList.remove('animate-spin');
+      }
+    }
+
+    function updateCounters() {
+      document.getElementById('memberCountBadge').innerText = allMembers.length;
+      document.getElementById('assetCountBadge').innerText = allAssets.length;
+    }
+
+    // ==========================================
+    // RENDER: ANGGOTA
+    // ==========================================
+    function renderMembers(data) {
+      const container = document.getElementById('membersContainer');
+      container.innerHTML = '';
+
+      if (data.length === 0) {
+        container.innerHTML = `
+          <div class="col-span-full py-16 text-center space-y-2">
+            <i data-lucide="inbox" class="w-12 h-12 text-slate-300 mx-auto"></i>
+            <p class="text-sm font-bold text-slate-600">Tidak ada anggota yang cocok</p>
+            <p class="text-xs text-slate-400">Coba ganti kata kunci pencarian, divisi, atau periode.</p>
+          </div>
+        `;
+        lucide.createIcons();
+        return;
+      }
+
+      data.forEach((member) => {
+        const card = document.createElement('div');
+        card.className = "bg-white rounded-2xl border border-emerald-100 overflow-hidden shadow-sm hover:shadow-md transition flex flex-col group hover:border-emerald-300 relative";
+
+        const hasPhoto = Boolean(member.viewUrl);
+        const initials = member.nama.split(' ').map(n => n[0]).slice(0, 2).join('').toUpperCase();
+        const memberRole = member.role || 'Staff';
+        const memberUni = member.universitas || '-';
+        const memberPeriode = member.periode || '2026/2027';
+
+        const encNama = encodeURIComponent(member.nama);
+        const encRole = encodeURIComponent(memberRole);
+        const encDivisi = encodeURIComponent(member.divisi);
+        const encUni = encodeURIComponent(memberUni);
+
+        let mediaHtml = '';
+        if (hasPhoto) {
+          mediaHtml = `
+            <div class="relative w-full aspect-[4/5] bg-slate-100 overflow-hidden">
+              <img 
+                src="${member.viewUrl}" 
+                alt="${member.nama}" 
+                class="w-full h-full object-cover group-hover:scale-105 transition duration-300"
+                onerror="this.src='https://via.placeholder.com/400x500?text=Foto+Tidak+Tersedia'"
+                loading="lazy"
+              >
+              <span class="absolute top-3 left-3 bg-emerald-900/80 backdrop-blur-md text-emerald-100 text-[10px] font-bold px-2.5 py-1 rounded-full border border-white/10 uppercase tracking-wider max-w-[65%] truncate">
+                ${member.divisi}
+              </span>
+              <span class="absolute top-3 right-3 bg-white/90 backdrop-blur-md text-emerald-900 text-[10px] font-extrabold px-2 py-0.5 rounded-md shadow-sm border border-emerald-200">
+                ${memberPeriode}
+              </span>
+            </div>
+          `;
+        } else {
+          mediaHtml = `
+            <div class="relative w-full aspect-[4/5] bg-gradient-to-br from-emerald-50 via-slate-50 to-emerald-100/50 flex flex-col items-center justify-center p-4 border-b border-emerald-50">
+              <span class="absolute top-3 left-3 bg-emerald-900/80 backdrop-blur-md text-emerald-100 text-[10px] font-bold px-2.5 py-1 rounded-full border border-white/10 uppercase tracking-wider max-w-[65%] truncate">
+                ${member.divisi}
+              </span>
+              <span class="absolute top-3 right-3 bg-white/90 backdrop-blur-md text-emerald-900 text-[10px] font-extrabold px-2 py-0.5 rounded-md shadow-sm border border-emerald-200">
+                ${memberPeriode}
+              </span>
+              <div class="w-20 h-20 rounded-2xl bg-emerald-200/60 border border-emerald-300 text-emerald-800 font-extrabold text-2xl flex items-center justify-center shadow-inner">
+                ${initials}
+              </div>
+              <span class="mt-3 text-[10px] font-bold px-2 py-0.5 rounded-full bg-amber-100 text-amber-800 border border-amber-200">
+                Foto Belum Ada
+              </span>
+            </div>
+          `;
+        }
+
+        card.innerHTML = `
+          ${mediaHtml}
+
+          <div class="p-4 flex-1 flex flex-col justify-between space-y-3">
+            <div>
+              <h4 class="font-extrabold text-slate-900 text-sm leading-snug line-clamp-2" title="${member.nama}">
+                ${member.nama}
+              </h4>
+              
+              <div class="mt-2 space-y-1.5">
+                <div class="inline-flex items-center gap-1 px-2 py-0.5 rounded-md bg-emerald-50 border border-emerald-200 text-emerald-800 text-[11px] font-bold tracking-wide">
+                  <i data-lucide="user-check" class="w-3 h-3 text-emerald-600"></i>
+                  <span>${memberRole}</span>
+                </div>
+                
+                <p class="text-xs font-semibold text-slate-700 flex items-center gap-1.5" title="Instansi: ${memberUni}">
+                  <i data-lucide="graduation-cap" class="w-3.5 h-3.5 text-emerald-600 flex-shrink-0"></i>
+                  <span class="truncate">${memberUni}</span>
+                </p>
+
+                <p class="text-[11px] font-medium text-slate-500 flex items-center gap-1.5" title="${member.divisi}">
+                  <i data-lucide="briefcase" class="w-3 h-3 text-slate-400 flex-shrink-0"></i>
+                  <span class="truncate">${member.divisi}</span>
+                </p>
+              </div>
+            </div>
+
+            <div class="space-y-1.5 pt-2 border-t border-slate-100">
+              <button 
+                onclick="copyEncodedText('${encNama}', 'Nama')" 
+                class="w-full flex items-center justify-center gap-1.5 py-1.5 px-3 rounded-lg bg-emerald-50 hover:bg-emerald-100 text-emerald-800 text-xs font-bold transition active:scale-95"
+              >
+                <i data-lucide="copy" class="w-3.5 h-3.5"></i>
+                <span>Salin Nama</span>
+              </button>
+
+              <div class="grid grid-cols-3 gap-1">
+                <button 
+                  onclick="copyEncodedText('${encRole}', 'Role')" 
+                  class="flex items-center justify-center gap-1 py-1 px-1 rounded-lg bg-emerald-100/60 hover:bg-emerald-100 text-emerald-900 text-[10px] font-bold transition active:scale-95"
+                  title="Salin Role"
+                >
+                  <i data-lucide="copy" class="w-3 h-3 text-emerald-700"></i>
+                  <span>Role</span>
+                </button>
+
+                <button 
+                  onclick="copyEncodedText('${encDivisi}', 'Direktorat')" 
+                  class="flex items-center justify-center gap-1 py-1 px-1 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-700 text-[10px] font-semibold transition active:scale-95"
+                  title="Salin Direktorat"
+                >
+                  <i data-lucide="copy" class="w-3 h-3 text-slate-500"></i>
+                  <span>Divisi</span>
+                </button>
+
+                <button 
+                  onclick="copyEncodedText('${encUni}', 'Kampus/Instansi')" 
+                  class="flex items-center justify-center gap-1 py-1 px-1 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-700 text-[10px] font-semibold transition active:scale-95"
+                  title="Salin Asal Kampus"
+                >
+                  <i data-lucide="copy" class="w-3 h-3 text-slate-500"></i>
+                  <span>Kampus</span>
+                </button>
+              </div>
+
+              <div class="flex gap-1.5 pt-0.5">
+                <button 
+                  onclick="openEditModal(${member.rowIndex})" 
+                  class="flex-1 flex items-center justify-center gap-1 py-1.5 px-2 rounded-lg bg-emerald-600 hover:bg-emerald-700 text-white text-[11px] font-semibold transition active:scale-95"
+                  title="Edit Data atau Upload Foto"
+                >
+                  <i data-lucide="edit" class="w-3 h-3"></i>
+                  <span>Edit</span>
+                </button>
+
+                <button 
+                  onclick="openDeleteModal(${member.rowIndex})" 
+                  class="p-1.5 rounded-lg bg-rose-50 hover:bg-rose-100 text-rose-600 border border-rose-200 text-[11px] font-semibold transition flex items-center justify-center px-2 active:scale-95"
+                  title="Hapus Anggota Ini"
+                >
+                  <i data-lucide="trash-2" class="w-3.5 h-3.5"></i>
+                </button>
+
+                ${hasPhoto ? `
+                  <a 
+                    href="${member.downloadUrl}" 
+                    target="_blank" 
+                    download 
+                    class="p-1.5 rounded-lg bg-slate-900 hover:bg-emerald-950 text-white text-[11px] font-semibold transition flex items-center justify-center px-2.5 active:scale-95"
+                    title="Unduh Foto Resolusi Asli"
+                  >
+                    <i data-lucide="download" class="w-3.5 h-3.5"></i>
+                  </a>
+                ` : ''}
+              </div>
+            </div>
+          </div>
+        `;
+        container.appendChild(card);
+      });
+
+      lucide.createIcons();
+    }
+
+    // ==========================================
+    // RENDER: ASET DESAIN
+    // ==========================================
+    function renderAssets(data) {
+      const container = document.getElementById('assetsContainer');
+      container.innerHTML = '';
+
+      if (data.length === 0) {
+        container.innerHTML = `
+          <div class="col-span-full py-16 text-center space-y-2">
+            <i data-lucide="folder-search" class="w-12 h-12 text-slate-300 mx-auto"></i>
+            <p class="text-sm font-bold text-slate-600">Belum ada aset desain yang cocok</p>
+            <p class="text-xs text-slate-400">Klik "Upload Aset Baru" di atas untuk menambahkan logo atau media kit.</p>
+          </div>
+        `;
+        lucide.createIcons();
+        return;
+      }
+
+      data.forEach((asset) => {
+        const card = document.createElement('div');
+        card.className = "bg-white rounded-2xl border border-emerald-100 overflow-hidden shadow-sm hover:shadow-md transition flex flex-col group hover:border-emerald-300 relative";
+
+        const isImg = asset.viewUrl && (asset.format.toUpperCase().includes('PNG') || asset.format.toUpperCase().includes('JPG') || asset.format.toUpperCase().includes('SVG'));
+        const encNama = encodeURIComponent(asset.nama);
+        const downloadUrl = asset.downloadUrl || asset.viewUrl || '#';
+
+        let previewHtml = '';
+        if (isImg) {
+          previewHtml = `
+            <div class="relative w-full aspect-video bg-gradient-to-br from-slate-100 to-slate-200 p-6 flex items-center justify-center overflow-hidden border-b border-slate-100">
+              <img 
+                src="${asset.viewUrl}" 
+                alt="${asset.nama}" 
+                class="max-h-full max-w-full object-contain group-hover:scale-105 transition duration-300"
+                loading="lazy"
+              >
+              <span class="absolute top-2.5 right-2.5 bg-slate-900/80 backdrop-blur-md text-white text-[10px] font-extrabold px-2 py-0.5 rounded-md uppercase">
+                ${asset.format}
+              </span>
+            </div>
+          `;
+        } else {
+          previewHtml = `
+            <div class="relative w-full aspect-video bg-emerald-50/60 p-6 flex flex-col items-center justify-center border-b border-emerald-100">
+              <div class="w-12 h-12 rounded-xl bg-emerald-600 text-white flex items-center justify-center shadow-sm">
+                <i data-lucide="file-archive" class="w-6 h-6"></i>
+              </div>
+              <span class="absolute top-2.5 right-2.5 bg-emerald-900 text-white text-[10px] font-extrabold px-2 py-0.5 rounded-md uppercase">
+                ${asset.format}
+              </span>
+            </div>
+          `;
+        }
+
+        card.innerHTML = `
+          ${previewHtml}
+
+          <div class="p-4 flex-1 flex flex-col justify-between space-y-3">
+            <div>
+              <span class="inline-block text-[10px] font-bold px-2 py-0.5 rounded-md bg-emerald-50 text-emerald-800 border border-emerald-200 mb-1.5 uppercase">
+                ${asset.kategori}
+              </span>
+              <h4 class="font-extrabold text-slate-900 text-sm leading-snug line-clamp-2" title="${asset.nama}">
+                ${asset.nama}
+              </h4>
+            </div>
+
+            <div class="pt-2 border-t border-slate-100 flex items-center gap-1.5">
+              <a 
+                href="${downloadUrl}" 
+                target="_blank" 
+                download 
+                class="flex-1 flex items-center justify-center gap-1.5 py-1.5 px-3 rounded-lg bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold transition active:scale-95"
+                title="Download Aset HD"
+              >
+                <i data-lucide="download" class="w-3.5 h-3.5"></i>
+                <span>Download</span>
+              </a>
+
+              <button 
+                onclick="copyEncodedText('${encodeURIComponent(downloadUrl)}', 'Link Aset')" 
+                class="p-2 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-700 transition active:scale-95"
+                title="Salin Tautan Download"
+              >
+                <i data-lucide="link" class="w-3.5 h-3.5"></i>
+              </button>
+
+              <button 
+                onclick="openDeleteAssetModal(${asset.rowIndex}, '${encNama}')" 
+                class="p-2 rounded-lg bg-rose-50 hover:bg-rose-100 text-rose-600 border border-rose-200 transition active:scale-95"
+                title="Hapus Aset"
+              >
+                <i data-lucide="trash-2" class="w-3.5 h-3.5"></i>
+              </button>
+            </div>
+          </div>
+        `;
+        container.appendChild(card);
+      });
+
+      lucide.createIcons();
+    }
+
+    function populateFilters(data) {
+      const selDiv = document.getElementById('divisionFilter');
+      const curDiv = selDiv.value;
+      const divisions = [...new Set(data.map(d => d.divisi))].filter(Boolean);
+
+      selDiv.innerHTML = '<option value="ALL">Semua Direktorat / Unit</option>';
+      divisions.forEach(div => {
+        const opt = document.createElement('option');
+        opt.value = div;
+        opt.innerText = div;
+        selDiv.appendChild(opt);
+      });
+      if (divisions.includes(curDiv)) selDiv.value = curDiv;
+
+      const selPer = document.getElementById('periodFilter');
+      const curPer = selPer.value;
+      const periods = [...new Set(data.map(d => d.periode))].filter(Boolean);
+      if (!periods.includes('2026/2027')) periods.unshift('2026/2027');
+
+      selPer.innerHTML = '<option value="ALL">Semua Periode</option>';
+      periods.forEach(per => {
+        const opt = document.createElement('option');
+        opt.value = per;
+        opt.innerText = per;
+        selPer.appendChild(opt);
+      });
+      if (periods.includes(curPer)) selPer.value = curPer;
+      else if (periods.includes('2026/2027')) selPer.value = '2026/2027';
+    }
+
+    function filterMembers() {
+      const query = document.getElementById('searchInput').value.toLowerCase().trim();
+      const divVal = document.getElementById('divisionFilter').value;
+      const perVal = document.getElementById('periodFilter').value;
+
+      const filtered = allMembers.filter(item => {
+        const matchQuery = item.nama.toLowerCase().includes(query) || 
+                           item.divisi.toLowerCase().includes(query) ||
+                           (item.role && item.role.toLowerCase().includes(query)) ||
+                           (item.universitas && item.universitas.toLowerCase().includes(query));
+        const matchDiv = (divVal === 'ALL') || (item.divisi === divVal);
+        const matchPer = (perVal === 'ALL') || (item.periode === perVal);
+        return matchQuery && matchDiv && matchPer;
+      });
+
+      renderMembers(filtered);
+    }
+
+    function filterAssets() {
+      const query = document.getElementById('searchAssetInput').value.toLowerCase().trim();
+      const katVal = document.getElementById('assetCategoryFilter').value;
+
+      const filtered = allAssets.filter(item => {
+        const matchQuery = item.nama.toLowerCase().includes(query) || 
+                           item.format.toLowerCase().includes(query) ||
+                           item.kategori.toLowerCase().includes(query);
+        const matchKat = (katVal === 'ALL') || (item.kategori === katVal);
+        return matchQuery && matchKat;
+      });
+
+      renderAssets(filtered);
+    }
+
+    window.copyEncodedText = function(encodedText, type) {
+      const text = decodeURIComponent(encodedText);
+      navigator.clipboard.writeText(text).then(() => {
+        showToast(`${type} berhasil disalin!`, 'success');
+      }).catch(() => {
+        showToast('Gagal menyalin teks', 'error');
+      });
+    };
+
+    function showToast(msg, type = 'success') {
+      const toast = document.getElementById('toast');
+      const toastMsg = document.getElementById('toastMsg');
+      const toastIcon = document.getElementById('toastIcon');
+
+      toastMsg.innerText = msg;
+      if (type === 'success') {
+        toast.className = 'fixed bottom-6 right-6 z-50 transform translate-y-0 opacity-100 transition-all duration-300 pointer-events-auto flex items-center gap-2 px-4 py-3 rounded-xl shadow-xl bg-slate-900 text-white border border-slate-700';
+        toastIcon.setAttribute('data-lucide', 'check-circle');
+        toastIcon.className = 'w-4 h-4 text-emerald-400';
+      } else {
+        toast.className = 'fixed bottom-6 right-6 z-50 transform translate-y-0 opacity-100 transition-all duration-300 pointer-events-auto flex items-center gap-2 px-4 py-3 rounded-xl shadow-xl bg-rose-600 text-white border border-rose-500';
+        toastIcon.setAttribute('data-lucide', 'alert-circle');
+        toastIcon.className = 'w-4 h-4 text-white';
+      }
+      lucide.createIcons();
+
+      setTimeout(() => {
+        toast.classList.remove('translate-y-0', 'opacity-100');
+        toast.classList.add('translate-y-20', 'opacity-0');
+      }, 3000);
+    }
+
+    // Modal Edit Anggota
+    window.openEditModal = function(rowIndex) {
+      const member = allMembers.find(m => m.rowIndex == rowIndex);
+      if (!member) return;
+
+      document.getElementById('editRowIndex').value = member.rowIndex;
+      document.getElementById('editOriginalNama').value = member.nama;
+      document.getElementById('editNama').value = member.nama;
+      document.getElementById('editDivisi').value = member.divisi;
+      document.getElementById('editRole').value = member.role || 'Staff';
+      document.getElementById('editUniversitas').value = member.universitas || '-';
+      document.getElementById('editPeriode').value = member.periode || '2026/2027';
+      resetEditFileInput();
+
+      const modalEdit = document.getElementById('modalEdit');
+      modalEdit.classList.remove('hidden');
+      modalEdit.classList.add('flex');
+    };
+
+    // Modal Delete Anggota
+    window.openDeleteModal = function(rowIndex) {
+      const member = allMembers.find(m => m.rowIndex == rowIndex);
+      if (!member) return;
+
+      document.getElementById('delRowIndex').value = member.rowIndex;
+      document.getElementById('delTargetNama').value = member.nama;
+      document.getElementById('delMemberName').innerText = member.nama;
+
+      const modalDelete = document.getElementById('modalDelete');
+      modalDelete.classList.remove('hidden');
+      modalDelete.classList.add('flex');
+    };
+
+    // Modal Delete Aset
+    window.openDeleteAssetModal = function(rowIndex, encNama) {
+      document.getElementById('delAssetRowIndex').value = rowIndex;
+      document.getElementById('delAssetName').innerText = decodeURIComponent(encNama);
+
+      const modal = document.getElementById('modalDeleteAsset');
+      modal.classList.remove('hidden');
+      modal.classList.add('flex');
+    };
+
+    function setupEventListeners() {
+      // Filter Anggota
+      document.getElementById('searchInput').addEventListener('input', filterMembers);
+      document.getElementById('divisionFilter').addEventListener('change', filterMembers);
+      document.getElementById('periodFilter').addEventListener('change', filterMembers);
+      document.getElementById('btnRefresh').addEventListener('click', loadData);
+
+      // Filter Aset
+      document.getElementById('searchAssetInput').addEventListener('input', filterAssets);
+      document.getElementById('assetCategoryFilter').addEventListener('change', filterAssets);
+
+      // Modal Tambah Anggota
+      const modalAdd = document.getElementById('modalAdd');
+      document.getElementById('btnOpenModal').addEventListener('click', () => {
+        modalAdd.classList.remove('hidden');
+        modalAdd.classList.add('flex');
+      });
+      const closeModal = () => {
+        modalAdd.classList.add('hidden');
+        modalAdd.classList.remove('flex');
+        resetAddForm();
+      };
+      document.getElementById('btnCloseModal').addEventListener('click', closeModal);
+      document.getElementById('btnCancelModal').addEventListener('click', closeModal);
+
+      // Modal Bulk
+      const modalBulk = document.getElementById('modalBulk');
+      document.getElementById('btnOpenBulkModal').addEventListener('click', () => {
+        modalBulk.classList.remove('hidden');
+        modalBulk.classList.add('flex');
+      });
+      const closeBulk = () => {
+        modalBulk.classList.add('hidden');
+        modalBulk.classList.remove('flex');
+        document.getElementById('bulkInputText').value = '';
+        document.getElementById('bulkPreviewCount').classList.add('hidden');
+      };
+      document.getElementById('btnCloseBulk').addEventListener('click', closeBulk);
+      document.getElementById('btnCancelBulk').addEventListener('click', closeBulk);
+
+      document.getElementById('bulkInputText').addEventListener('input', (e) => {
+        const text = e.target.value.trim();
+        const defaultPer = document.getElementById('bulkDefaultPeriode').value.trim() || '2026/2027';
+        const parsed = parseBulkText(text, defaultPer);
+        const countBox = document.getElementById('bulkPreviewCount');
+        const countEl = document.getElementById('parsedCount');
+        if (parsed.length > 0) {
+          countBox.classList.remove('hidden');
+          countEl.innerText = parsed.length;
+        } else {
+          countBox.classList.add('hidden');
+        }
+      });
+      document.getElementById('btnSubmitBulk').addEventListener('click', handleBulkSubmit);
+
+      // Modal Edit Anggota
+      const modalEdit = document.getElementById('modalEdit');
+      const closeEdit = () => {
+        modalEdit.classList.add('hidden');
+        modalEdit.classList.remove('flex');
+        resetEditFileInput();
+      };
+      document.getElementById('btnCloseEdit').addEventListener('click', closeEdit);
+      document.getElementById('btnCancelEdit').addEventListener('click', closeEdit);
+      document.getElementById('formEditMember').addEventListener('submit', handleEditSubmit);
+
+      // Modal Delete Anggota
+      const modalDelete = document.getElementById('modalDelete');
+      const closeDelete = () => {
+        modalDelete.classList.add('hidden');
+        modalDelete.classList.remove('flex');
+      };
+      document.getElementById('btnCancelDelete').addEventListener('click', closeDelete);
+      document.getElementById('btnConfirmDelete').addEventListener('click', handleConfirmDelete);
+
+      // Modal Tambah Aset
+      const modalAddAsset = document.getElementById('modalAddAsset');
+      document.getElementById('btnOpenAddAsset').addEventListener('click', () => {
+        modalAddAsset.classList.remove('hidden');
+        modalAddAsset.classList.add('flex');
+      });
+      const closeAddAsset = () => {
+        modalAddAsset.classList.add('hidden');
+        modalAddAsset.classList.remove('flex');
+        resetAssetForm();
+      };
+      document.getElementById('btnCloseAddAsset').addEventListener('click', closeAddAsset);
+      document.getElementById('btnCancelAddAsset').addEventListener('click', closeAddAsset);
+      document.getElementById('formAddAsset').addEventListener('submit', handleAddAssetSubmit);
+
+      // Modal Delete Aset
+      const modalDeleteAsset = document.getElementById('modalDeleteAsset');
+      const closeDeleteAsset = () => {
+        modalDeleteAsset.classList.add('hidden');
+        modalDeleteAsset.classList.remove('flex');
+      };
+      document.getElementById('btnCancelDeleteAsset').addEventListener('click', closeDeleteAsset);
+      document.getElementById('btnConfirmDeleteAsset').addEventListener('click', handleConfirmDeleteAsset);
+
+      // Dropzone Tambah Anggota
+      const dropZone = document.getElementById('dropZone');
+      const inputFile = document.getElementById('inputFile');
+      dropZone.addEventListener('click', () => inputFile.click());
+      inputFile.addEventListener('change', (e) => {
+        if (e.target.files && e.target.files[0]) handleAddFile(e.target.files[0]);
+      });
+      document.getElementById('btnRemoveFile').addEventListener('click', (e) => {
+        e.stopPropagation();
+        resetAddFileInput();
+      });
+      document.getElementById('formAddMember').addEventListener('submit', handleAddFormSubmit);
+
+      // Dropzone Edit Anggota
+      const dropZoneEdit = document.getElementById('dropZoneEdit');
+      const inputFileEdit = document.getElementById('inputFileEdit');
+      dropZoneEdit.addEventListener('click', () => inputFileEdit.click());
+      inputFileEdit.addEventListener('change', (e) => {
+        if (e.target.files && e.target.files[0]) handleEditFile(e.target.files[0]);
+      });
+      document.getElementById('btnRemoveFileEdit').addEventListener('click', (e) => {
+        e.stopPropagation();
+        resetEditFileInput();
+      });
+
+      // Dropzone Aset
+      const dropZoneAsset = document.getElementById('dropZoneAsset');
+      const inputFileAsset = document.getElementById('inputFileAsset');
+      dropZoneAsset.addEventListener('click', () => inputFileAsset.click());
+      inputFileAsset.addEventListener('change', (e) => {
+        if (e.target.files && e.target.files[0]) handleAssetFile(e.target.files[0]);
+      });
+      document.getElementById('btnRemoveFileAsset').addEventListener('click', (e) => {
+        e.stopPropagation();
+        resetAssetFileInput();
+      });
+    }
+
+    function parseBulkText(text, defaultPeriode = '2026/2027') {
+      if (!text) return [];
+      const lines = text.split('\n');
+      const result = [];
+      lines.forEach(line => {
+        const trimmed = line.trim();
+        if (!trimmed) return;
+        
+        let parts = [];
+        if (trimmed.includes('\t')) parts = trimmed.split('\t');
+        else if (trimmed.includes(';')) parts = trimmed.split(';');
+        else if (trimmed.includes(',')) parts = trimmed.split(',');
+        else if (trimmed.includes('|')) parts = trimmed.split('|');
+
+        if (parts.length >= 5) {
+          result.push({
+            nama: parts[0].trim(),
+            divisi: parts[1].trim(),
+            role: parts[2].trim(),
+            universitas: parts[3].trim(),
+            periode: parts.slice(4).join(' ').trim() || defaultPeriode
+          });
+        } else if (parts.length === 4) {
+          result.push({
+            nama: parts[0].trim(),
+            divisi: parts[1].trim(),
+            role: parts[2].trim(),
+            universitas: parts[3].trim(),
+            periode: defaultPeriode
+          });
+        } else if (parts.length === 3) {
+          result.push({
+            nama: parts[0].trim(),
+            divisi: parts[1].trim(),
+            role: parts[2].trim(),
+            universitas: '-',
+            periode: defaultPeriode
+          });
+        } else if (parts.length === 2) {
+          result.push({
+            nama: parts[0].trim(),
+            divisi: parts[1].trim(),
+            role: 'Staff',
+            universitas: '-',
+            periode: defaultPeriode
+          });
+        } else {
+          result.push({
+            nama: trimmed,
+            divisi: 'Belum Ditentukan',
+            role: 'Staff',
+            universitas: '-',
+            periode: defaultPeriode
+          });
+        }
+      });
+      return result;
+    }
+
+    // Submit Bulk Anggota
+    async function handleBulkSubmit() {
+      const text = document.getElementById('bulkInputText').value.trim();
+      const defaultPeriode = document.getElementById('bulkDefaultPeriode').value.trim() || '2026/2027';
+      const members = parseBulkText(text, defaultPeriode);
+
+      if (members.length === 0) {
+        showToast('Masukkan minimal 1 baris nama!', 'error');
+        return;
+      }
+
+      const btn = document.getElementById('btnSubmitBulk');
+      const btnText = document.getElementById('bulkBtnText');
+      btn.disabled = true;
+      btnText.innerText = 'Mengimpor...';
+
+      try {
+        const payload = { action: 'bulk', members: members };
+        const res = await fetch(SCRIPT_URL, { method: 'POST', body: JSON.stringify(payload) });
+        const json = await res.json();
+        if (json.success) {
+          showToast(json.message || 'Berhasil mengimpor!', 'success');
+          document.getElementById('modalBulk').classList.add('hidden');
+          document.getElementById('modalBulk').classList.remove('flex');
+          loadData();
+        } else {
+          showToast('Gagal: ' + (json.error || 'Server error'), 'error');
+        }
+      } catch (err) {
+        console.error(err);
+        showToast('Koneksi ke Apps Script gagal!', 'error');
+      } finally {
+        btn.disabled = false;
+        btnText.innerText = 'Mulai Import';
+      }
+    }
+
+    // Submit Hapus Anggota
+    async function handleConfirmDelete() {
+      const rowIndex = document.getElementById('delRowIndex').value;
+      const nama = document.getElementById('delTargetNama').value;
+      const btn = document.getElementById('btnConfirmDelete');
+      btn.disabled = true;
+      btn.innerText = 'Menghapus...';
+
+      try {
+        const payload = { action: 'delete', rowIndex: rowIndex, nama: nama };
+        const res = await fetch(SCRIPT_URL, { method: 'POST', body: JSON.stringify(payload) });
+        const json = await res.json();
+        if (json.success) {
+          showToast('Anggota berhasil dihapus!', 'success');
+          document.getElementById('modalDelete').classList.add('hidden');
+          document.getElementById('modalDelete').classList.remove('flex');
+          loadData();
+        } else {
+          showToast('Gagal: ' + (json.error || 'Server error'), 'error');
+        }
+      } catch (err) {
+        console.error(err);
+        showToast('Koneksi ke server gagal!', 'error');
+      } finally {
+        btn.disabled = false;
+        btn.innerText = 'Hapus';
+      }
+    }
+
+    // Submit Edit Anggota
+    async function handleEditSubmit(e) {
+      e.preventDefault();
+      const rowIndex = document.getElementById('editRowIndex').value;
+      const originalNama = document.getElementById('editOriginalNama').value;
+      const nama = document.getElementById('editNama').value.trim();
+      const divisi = document.getElementById('editDivisi').value.trim();
+      const role = document.getElementById('editRole').value.trim();
+      const universitas = document.getElementById('editUniversitas').value.trim();
+      const periode = document.getElementById('editPeriode').value.trim();
+
+      const btn = document.getElementById('btnSubmitEdit');
+      const btnText = document.getElementById('editBtnText');
+      btn.disabled = true;
+      btnText.innerText = 'Menyimpan...';
+
+      try {
+        const payload = {
+          action: 'update',
+          rowIndex: rowIndex,
+          originalNama: originalNama,
+          nama: nama,
+          divisi: divisi,
+          role: role,
+          universitas: universitas,
+          periode: periode,
+          fileName: editFileName,
+          mimeType: editMimeType,
+          fileBase64: editFileBase64
+        };
+
+        const res = await fetch(SCRIPT_URL, { method: 'POST', body: JSON.stringify(payload) });
+        const json = await res.json();
+        if (json.success) {
+          showToast('Data & foto berhasil diperbarui!', 'success');
+          document.getElementById('modalEdit').classList.add('hidden');
+          document.getElementById('modalEdit').classList.remove('flex');
+          loadData();
+        } else {
+          showToast('Gagal: ' + (json.error || 'Server error'), 'error');
+        }
+      } catch (err) {
+        console.error(err);
+        showToast('Koneksi gagal!', 'error');
+      } finally {
+        btn.disabled = false;
+        btnText.innerText = 'Simpan Perubahan';
+      }
+    }
+
+    // Submit Tambah Anggota
+    async function handleAddFormSubmit(e) {
+      e.preventDefault();
+      const nama = document.getElementById('inputNama').value.trim();
+      const divisi = document.getElementById('inputDivisi').value.trim();
+      const role = document.getElementById('inputRole').value.trim();
+      const universitas = document.getElementById('inputUniversitas').value.trim();
+      const periode = document.getElementById('inputPeriode').value.trim();
+
+      const btnSubmit = document.getElementById('btnSubmitForm');
+      const btnText = document.getElementById('submitBtnText');
+      btnSubmit.disabled = true;
+      btnText.innerText = 'Menyimpan...';
+
+      try {
+        const payload = {
+          action: 'create',
+          nama: nama,
+          divisi: divisi,
+          role: role,
+          universitas: universitas,
+          periode: periode,
+          fileName: addFileName,
+          mimeType: addMimeType,
+          fileBase64: addFileBase64
+        };
+
+        const res = await fetch(SCRIPT_URL, { method: 'POST', body: JSON.stringify(payload) });
+        const json = await res.json();
+        if (json.success) {
+          showToast('Anggota berhasil ditambahkan!', 'success');
+          document.getElementById('modalAdd').classList.add('hidden');
+          document.getElementById('modalAdd').classList.remove('flex');
+          resetAddForm();
+          loadData();
+        } else {
+          showToast('Gagal: ' + (json.error || 'Server error'), 'error');
+        }
+      } catch (err) {
+        console.error(err);
+        showToast('Koneksi ke Apps Script gagal!', 'error');
+      } finally {
+        btnSubmit.disabled = false;
+        btnText.innerText = 'Simpan Data';
+      }
+    }
+
+    // Submit Tambah Aset
+    async function handleAddAssetSubmit(e) {
+      e.preventDefault();
+      const nama = document.getElementById('assetNama').value.trim();
+      const kategori = document.getElementById('assetKategori').value;
+      const format = document.getElementById('assetFormat').value.trim().toUpperCase();
+
+      if (!assetFileBase64) {
+        showToast('Pilih file aset terlebih dahulu!', 'error');
+        return;
+      }
+
+      const btn = document.getElementById('btnSubmitAsset');
+      const btnText = document.getElementById('submitAssetBtnText');
+      btn.disabled = true;
+      btnText.innerText = 'Mengupload ke Drive...';
+
+      try {
+        const payload = {
+          action: 'create_asset',
+          nama: nama,
+          kategori: kategori,
+          format: format,
+          fileName: assetFileName,
+          mimeType: assetMimeType,
+          fileBase64: assetFileBase64
+        };
+
+        const res = await fetch(SCRIPT_URL, { method: 'POST', body: JSON.stringify(payload) });
+        const json = await res.json();
+        if (json.success) {
+          showToast('Aset desain berhasil disimpan ke Drive!', 'success');
+          document.getElementById('modalAddAsset').classList.add('hidden');
+          document.getElementById('modalAddAsset').classList.remove('flex');
+          resetAssetForm();
+          loadData();
+        } else {
+          showToast('Gagal: ' + (json.error || 'Server error'), 'error');
+        }
+      } catch (err) {
+        console.error(err);
+        showToast('Koneksi gagal!', 'error');
+      } finally {
+        btn.disabled = false;
+        btnText.innerText = 'Simpan Aset';
+      }
+    }
+
+    // Submit Hapus Aset
+    async function handleConfirmDeleteAsset() {
+      const rowIndex = document.getElementById('delAssetRowIndex').value;
+      const btn = document.getElementById('btnConfirmDeleteAsset');
+      btn.disabled = true;
+      btn.innerText = 'Menghapus...';
+
+      try {
+        const payload = { action: 'delete_asset', rowIndex: rowIndex };
+        const res = await fetch(SCRIPT_URL, { method: 'POST', body: JSON.stringify(payload) });
+        const json = await res.json();
+        if (json.success) {
+          showToast('Aset desain berhasil dihapus!', 'success');
+          document.getElementById('modalDeleteAsset').classList.add('hidden');
+          document.getElementById('modalDeleteAsset').classList.remove('flex');
+          loadData();
+        } else {
+          showToast('Gagal: ' + (json.error || 'Server error'), 'error');
+        }
+      } catch (err) {
+        console.error(err);
+        showToast('Koneksi gagal!', 'error');
+      } finally {
+        btn.disabled = false;
+        btn.innerText = 'Hapus Aset';
+      }
+    }
+
+    // File Helpers Anggota
+    function handleAddFile(file) {
+      if (!file.type.startsWith('image/')) {
+        showToast('File harus berupa gambar (JPG/PNG)', 'error');
+        return;
+      }
+      addFileName = file.name;
+      addMimeType = file.type;
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        addFileBase64 = e.target.result;
+        document.getElementById('uploadPlaceholder').classList.add('hidden');
+        document.getElementById('uploadPreview').classList.remove('hidden');
+        document.getElementById('previewImg').src = e.target.result;
+        document.getElementById('previewName').innerText = file.name;
+      };
+      reader.readAsDataURL(file);
+    }
+
+    function resetAddFileInput() {
+      addFileBase64 = null;
+      addFileName = '';
+      addMimeType = '';
+      document.getElementById('inputFile').value = '';
+      document.getElementById('uploadPlaceholder').classList.remove('hidden');
+      document.getElementById('uploadPreview').classList.add('hidden');
+    }
+
+    function resetAddForm() {
+      document.getElementById('formAddMember').reset();
+      document.getElementById('inputPeriode').value = '2026/2027';
+      resetAddFileInput();
+    }
+
+    function handleEditFile(file) {
+      if (!file.type.startsWith('image/')) {
+        showToast('File harus berupa gambar (JPG/PNG)', 'error');
+        return;
+      }
+      editFileName = file.name;
+      editMimeType = file.type;
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        editFileBase64 = e.target.result;
+        document.getElementById('uploadPlaceholderEdit').classList.add('hidden');
+        document.getElementById('uploadPreviewEdit').classList.remove('hidden');
+        document.getElementById('previewImgEdit').src = e.target.result;
+        document.getElementById('previewNameEdit').innerText = file.name;
+      };
+      reader.readAsDataURL(file);
+    }
+
+    function resetEditFileInput() {
+      editFileBase64 = null;
+      editFileName = '';
+      editMimeType = '';
+      document.getElementById('inputFileEdit').value = '';
+      document.getElementById('uploadPlaceholderEdit').classList.remove('hidden');
+      document.getElementById('uploadPreviewEdit').classList.add('hidden');
+    }
+
+    // File Helpers Aset Desain
+    function handleAssetFile(file) {
+      assetFileName = file.name;
+      assetMimeType = file.type || 'application/octet-stream';
+
+      const ext = file.name.split('.').pop().toUpperCase();
+      document.getElementById('assetFormat').value = ext;
+
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        assetFileBase64 = e.target.result;
+        document.getElementById('uploadPlaceholderAsset').classList.add('hidden');
+        document.getElementById('uploadPreviewAsset').classList.remove('hidden');
+        document.getElementById('previewAssetName').innerText = file.name;
+        document.getElementById('previewAssetSize').innerText = (file.size / (1024 * 1024)).toFixed(2) + ' MB';
+        document.getElementById('previewAssetBadge').innerText = ext;
+      };
+      reader.readAsDataURL(file);
+    }
+
+    function resetAssetFileInput() {
+      assetFileBase64 = null;
+      assetFileName = '';
+      assetMimeType = '';
+      document.getElementById('inputFileAsset').value = '';
+      document.getElementById('uploadPlaceholderAsset').classList.remove('hidden');
+      document.getElementById('uploadPreviewAsset').classList.add('hidden');
+    }
+
+    function resetAssetForm() {
+      document.getElementById('formAddAsset').reset();
+      resetAssetFileInput();
+    }
+  </script>
+</body>
+</html>
