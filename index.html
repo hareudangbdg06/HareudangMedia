@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>Hareudang Bandung - Database Anggota & Aset Media</title>
+  <title>Hareudang Bandung — Talent Hub & Media Kit</title>
   <!-- Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
   <!-- Lucide Icons -->
@@ -14,230 +14,305 @@
       theme: {
         extend: {
           colors: {
-            hareudang: {
+            brand: {
               50: '#f0fdf4',
               100: '#dcfce7',
               200: '#bbf7d0',
-              500: '#22c55e',
-              600: '#16a34a',
-              700: '#15803d',
-              800: '#166534',
-              900: '#14532d',
+              500: '#10b981',
+              600: '#059669',
+              700: '#047857',
+              800: '#065f46',
+              900: '#064e3b',
+              950: '#022c22',
             }
+          },
+          boxShadow: {
+            'subtle': '0 1px 2px 0 rgba(0, 0, 0, 0.04), 0 1px 3px 0 rgba(0, 0, 0, 0.02)',
+            'card': '0 1px 3px 0 rgba(15, 23, 42, 0.05), 0 1px 2px -1px rgba(15, 23, 42, 0.05)',
+            'elevated': '0 10px 25px -5px rgba(15, 23, 42, 0.08), 0 8px 10px -6px rgba(15, 23, 42, 0.04)',
           }
         }
       }
     }
   </script>
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;600&display=swap');
     body {
-      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
       -webkit-tap-highlight-color: transparent;
     }
+    .font-mono-tag {
+      font-family: 'JetBrains Mono', monospace;
+    }
     .custom-scrollbar::-webkit-scrollbar {
-      width: 5px;
-      height: 5px;
+      width: 4px;
+      height: 4px;
     }
     .custom-scrollbar::-webkit-scrollbar-thumb {
       background: #cbd5e1;
       border-radius: 9999px;
     }
+    .transparent-pattern {
+      background-image: linear-gradient(45deg, #f1f5f9 25%, transparent 25%), 
+                        linear-gradient(-45deg, #f1f5f9 25%, transparent 25%), 
+                        linear-gradient(45deg, transparent 75%, #f1f5f9 75%), 
+                        linear-gradient(-45deg, transparent 75%, #f1f5f9 75%);
+      background-size: 16px 16px;
+      background-position: 0 0, 0 8px, 8px -8px, -8px 0px;
+    }
   </style>
 </head>
-<body class="bg-[#F8FAF9] text-slate-900 min-h-screen flex flex-col antialiased selection:bg-emerald-600 selection:text-white">
+<body class="bg-[#F8FAFC] text-slate-900 min-h-screen flex flex-col antialiased selection:bg-brand-600 selection:text-white">
 
-  <!-- Header & Navbar Mobile-Optimized -->
-  <header class="sticky top-0 z-40 bg-white/95 backdrop-blur-md border-b border-emerald-100 shadow-sm">
-    <div class="max-w-7xl mx-auto px-3.5 sm:px-6 lg:px-8 h-14 sm:h-16 flex items-center justify-between gap-2">
-      <!-- Brand Logo & Title -->
-      <div class="flex items-center gap-2.5 min-w-0">
+  <!-- Enterprise Top Navigation -->
+  <header class="sticky top-0 z-40 bg-white/90 backdrop-blur-md border-b border-slate-200/80">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between gap-4">
+      
+      <!-- Organization Identifier -->
+      <div class="flex items-center gap-3.5 min-w-0">
         <div class="flex items-center justify-center flex-shrink-0">
           <img 
             src="logo.png" 
             alt="Logo Hareudang" 
-            class="h-8 sm:h-9 w-auto max-w-[100px] sm:max-w-[130px] object-contain"
+            class="h-8 sm:h-9 w-auto max-w-[120px] object-contain"
             onerror="this.style.display='none'; document.getElementById('fallbackLogo').style.display='flex';"
           >
-          <div id="fallbackLogo" style="display:none;" class="w-8 h-8 bg-emerald-600 rounded-xl items-center justify-center text-white shadow-sm">
-            <i data-lucide="flame" class="w-4 h-4"></i>
+          <div id="fallbackLogo" style="display:none;" class="w-8 h-8 bg-slate-900 rounded-lg items-center justify-center text-white shadow-sm">
+            <i data-lucide="layers" class="w-4 h-4 text-emerald-400"></i>
           </div>
         </div>
 
-        <div class="h-6 w-[1px] bg-slate-200 hidden sm:block"></div>
+        <div class="h-5 w-[1px] bg-slate-200 hidden sm:block"></div>
 
         <div class="min-w-0">
-          <h1 class="text-sm sm:text-base font-extrabold text-slate-900 leading-tight tracking-tight truncate">
-            Hareudang Bandung
-          </h1>
-          <p class="text-[11px] text-slate-500 font-medium hidden sm:block truncate">
+          <div class="flex items-center gap-2">
+            <h1 class="text-sm sm:text-base font-bold text-slate-900 tracking-tight leading-none truncate">
+              Hareudang Bandung
+            </h1>
+          </div>
+          <p class="text-[11px] text-slate-500 font-medium tracking-tight mt-1 hidden sm:block truncate">
             Direktori Anggota & Aset Media Kreatif
           </p>
         </div>
       </div>
 
-      <!-- Action Buttons -->
-      <div class="flex items-center gap-1.5 sm:gap-2 flex-shrink-0">
-        <!-- Actions: Tab Anggota -->
-        <div id="memberHeaderActions" class="flex items-center gap-1.5 sm:gap-2">
-          <button id="btnOpenBulkModal" class="flex items-center gap-1 px-2.5 sm:px-3 py-1.5 sm:py-2 rounded-xl bg-emerald-50 hover:bg-emerald-100 text-emerald-800 text-xs font-bold border border-emerald-200 transition active:scale-95">
-            <i data-lucide="list-plus" class="w-3.5 h-3.5 sm:w-4 sm:h-4"></i>
-            <span class="hidden sm:inline">Import Banyak</span>
+      <!-- Action Suite -->
+      <div class="flex items-center gap-2 flex-shrink-0">
+        <!-- Anggota Context Actions -->
+        <div id="memberHeaderActions" class="flex items-center gap-2">
+          <button id="btnOpenBulkModal" class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-white border border-slate-200 hover:border-slate-300 hover:bg-slate-50 text-slate-700 text-xs font-semibold shadow-subtle transition active:scale-[0.98]">
+            <i data-lucide="file-spreadsheet" class="w-3.5 h-3.5 text-slate-500"></i>
+            <span class="hidden sm:inline">Import Massal</span>
             <span class="inline sm:hidden">Import</span>
           </button>
-          <button id="btnOpenModal" class="flex items-center gap-1 px-3 sm:px-4 py-1.5 sm:py-2 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs sm:text-sm font-semibold shadow-sm shadow-emerald-200 transition active:scale-95">
-            <i data-lucide="plus" class="w-3.5 h-3.5 sm:w-4 sm:h-4"></i>
-            <span>Tambah</span>
+          
+          <button id="btnOpenModal" class="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-lg bg-slate-900 hover:bg-slate-800 text-white text-xs font-semibold shadow-subtle transition active:scale-[0.98]">
+            <i data-lucide="plus" class="w-3.5 h-3.5 text-emerald-400"></i>
+            <span>Tambah Data</span>
           </button>
         </div>
 
-        <!-- Actions: Tab Aset -->
-        <div id="assetHeaderActions" class="hidden items-center gap-1.5 sm:gap-2">
-          <button id="btnOpenAddAsset" class="flex items-center gap-1.5 px-3 sm:px-4 py-1.5 sm:py-2 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs sm:text-sm font-semibold shadow-sm shadow-emerald-200 transition active:scale-95">
-            <i data-lucide="upload-cloud" class="w-3.5 h-3.5 sm:w-4 sm:h-4"></i>
-            <span class="hidden sm:inline">Upload Aset Baru</span>
-            <span class="inline sm:hidden">Upload</span>
+        <!-- Aset Context Actions -->
+        <div id="assetHeaderActions" class="hidden items-center gap-2">
+          <button id="btnOpenAddAsset" class="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-lg bg-slate-900 hover:bg-slate-800 text-white text-xs font-semibold shadow-subtle transition active:scale-[0.98]">
+            <i data-lucide="upload" class="w-3.5 h-3.5 text-emerald-400"></i>
+            <span>Upload Aset Baru</span>
           </button>
         </div>
       </div>
+
     </div>
   </header>
 
-  <!-- Segmented Tab Switcher -->
-  <div class="bg-white/90 backdrop-blur-md border-b border-emerald-100 sticky top-14 sm:top-16 z-30 py-2">
-    <div class="max-w-7xl mx-auto px-3.5 sm:px-6 lg:px-8">
-      <div class="bg-slate-100/90 p-1 rounded-2xl flex items-center gap-1 max-w-md mx-auto sm:mx-0">
-        <button id="tabBtnMembers" class="flex-1 flex items-center justify-center gap-1.5 py-1.5 sm:py-2 px-3 rounded-xl text-xs sm:text-sm font-bold transition bg-emerald-600 text-white shadow-sm shadow-emerald-200">
-          <i data-lucide="users" class="w-3.5 h-3.5 sm:w-4 sm:h-4"></i>
-          <span>Anggota</span>
-          <span id="memberCountBadge" class="ml-0.5 px-1.5 py-0.2 rounded-full bg-white/20 text-[10px]">0</span>
-        </button>
+  <!-- Segmented Hub Navigation Bar -->
+  <div class="bg-white border-b border-slate-200/80 sticky top-16 z-30">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between py-2">
+        
+        <!-- Tab Switcher (Segmented Corporate Control) -->
+        <div class="inline-flex p-1 rounded-xl bg-slate-100/90 border border-slate-200/60">
+          <button id="tabBtnMembers" class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-lg text-xs font-semibold transition bg-white text-slate-900 shadow-sm border border-slate-200/50">
+            <i data-lucide="users" class="w-3.5 h-3.5 text-emerald-600"></i>
+            <span>Database Personel</span>
+            <span id="memberCountBadge" class="ml-1 px-1.5 py-0.2 rounded-md bg-slate-100 text-slate-700 font-mono-tag text-[10px]">0</span>
+          </button>
 
-        <button id="tabBtnAssets" class="flex-1 flex items-center justify-center gap-1.5 py-1.5 sm:py-2 px-3 rounded-xl text-xs sm:text-sm font-bold transition text-slate-600 hover:text-emerald-800 hover:bg-white/60">
-          <i data-lucide="palette" class="w-3.5 h-3.5 sm:w-4 sm:h-4"></i>
-          <span>Aset Desain</span>
-          <span id="assetCountBadge" class="ml-0.5 px-1.5 py-0.2 rounded-full bg-slate-200 text-slate-700 text-[10px]">0</span>
-        </button>
+          <button id="tabBtnAssets" class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-lg text-xs font-semibold transition text-slate-600 hover:text-slate-900 hover:bg-white/50">
+            <i data-lucide="component" class="w-3.5 h-3.5 text-slate-400"></i>
+            <span>Media Kit & Aset Desain</span>
+            <span id="assetCountBadge" class="ml-1 px-1.5 py-0.2 rounded-md bg-slate-200/70 text-slate-600 font-mono-tag text-[10px]">0</span>
+          </button>
+        </div>
+
+      
+
       </div>
     </div>
   </div>
 
-  <!-- Main Content Container -->
-  <main class="flex-1 max-w-7xl mx-auto px-3.5 sm:px-6 lg:px-8 py-5 sm:py-8 w-full space-y-5 sm:space-y-6">
+  <!-- Primary Workspace Content -->
+  <main class="flex-1 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 w-full space-y-6">
 
     <!-- ========================================== -->
-    <!-- VIEW 1: DATABASE ANGGOTA                   -->
+    <!-- VIEW 1: DATABASE PERSONEL                  -->
     <!-- ========================================== -->
-    <div id="viewMembers" class="space-y-4 sm:space-y-6">
-      <!-- Top Banner Anggota -->
-      <div class="bg-gradient-to-r from-emerald-900 via-emerald-800 to-teal-950 rounded-2xl p-4 sm:p-6 lg:p-8 text-white relative overflow-hidden shadow-md border border-emerald-800">
-        <div class="absolute -right-8 -bottom-10 w-60 sm:w-72 h-60 sm:h-72 bg-emerald-500/15 rounded-full blur-3xl pointer-events-none"></div>
-        <div class="relative z-10 max-w-2xl space-y-1.5 sm:space-y-2">
-          <span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 sm:px-3 sm:py-1 rounded-full text-[10px] sm:text-xs font-bold bg-emerald-500/20 text-emerald-200 border border-emerald-400/30">
-            <i data-lucide="sparkles" class="w-3 h-3 sm:w-3.5 sm:h-3.5 text-emerald-300"></i> Divisi Media Kreatif
-          </span>
-          <h2 class="text-base sm:text-xl lg:text-2xl font-extrabold tracking-tight">
-            Katalog Anggota & Asset Foto Asli
-          </h2>
-          <p class="text-[11px] sm:text-xs lg:text-sm text-emerald-100/90 leading-relaxed">
-            Klik untuk salin nama, role, divisi, atau kampus tanpa salah ketik dan unduh foto resolusi asli untuk poster, ucapan, atau feed IG.
-          </p>
+    <div id="viewMembers" class="space-y-6">
+      
+      <!-- Executive Workspace Overview Header -->
+      <div class="bg-white rounded-2xl p-5 sm:p-6 border border-slate-200/80 shadow-card">
+        <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
+          <div class="space-y-1">
+            <div class="flex items-center gap-2 text-xs font-semibold text-emerald-800">
+          
+              Media Kit & Brand Assets
+            </div>
+            <h2 class="text-xl sm:text-2xl font-bold text-slate-900 tracking-tight">
+              Pusat Data Anggota & Berkas Foto HD
+            </h2>
+            <p class="text-xs sm:text-sm text-slate-500 max-w-2xl leading-relaxed">
+              Klik untuk salin nama, role, divisi, atau kampus tanpa salah ketik dan unduh foto resolusi asli untuk poster, ucapan, atau feed IG.
+            </p>
+          </div>
+
+          <!-- Quick Metrics Bar -->
+          <div class="grid grid-cols-2 sm:grid-cols-3 gap-3 border-t md:border-t-0 md:border-l border-slate-100 pt-3 md:pt-0 md:pl-6 flex-shrink-0">
+            <div class="bg-slate-50 rounded-xl p-3 border border-slate-100">
+              <span class="block text-[11px] font-medium text-slate-500">Tahun Aktif</span>
+              <span class="text-sm font-bold text-slate-900 font-mono-tag">2026/2027</span>
+            </div>
+            <div class="bg-slate-50 rounded-xl p-3 border border-slate-100">
+              <span class="block text-[11px] font-medium text-slate-500">Total Entri</span>
+              <span id="metricTotalMembers" class="text-sm font-bold text-slate-900 font-mono-tag">0 Data</span>
+            </div>
+            <div class="col-span-2 sm:col-span-1 bg-slate-50 rounded-xl p-3 border border-slate-100">
+              <span class="block text-[11px] font-medium text-slate-500">Foto Tersedia</span>
+              <span id="metricPhotoMembers" class="text-sm font-bold text-emerald-700 font-mono-tag">0 File</span>
+            </div>
+          </div>
         </div>
       </div>
 
-      <!-- Toolbar Anggota Mobile-Friendly -->
-      <div class="bg-white p-3 sm:p-4 rounded-2xl border border-emerald-100 shadow-sm flex flex-col md:flex-row gap-2.5 sm:gap-3 items-stretch md:items-center justify-between">
-        <div class="relative flex-1 md:max-w-xs">
-          <i data-lucide="search" class="w-4 h-4 text-emerald-600 absolute left-3 top-1/2 -translate-y-1/2"></i>
+      <!-- Professional Control Toolbar -->
+      <div class="bg-white p-3.5 sm:p-4 rounded-xl border border-slate-200/80 shadow-subtle flex flex-col md:flex-row gap-3 items-stretch md:items-center justify-between">
+        
+        <!-- Search Field -->
+        <div class="relative flex-1 md:max-w-md">
+          <i data-lucide="search" class="w-4 h-4 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2"></i>
           <input 
             type="text" 
             id="searchInput" 
-            placeholder="Cari nama, role, divisi, kampus..." 
-            class="w-full pl-9 pr-4 py-2 bg-emerald-50/40 border border-emerald-200 rounded-xl text-xs sm:text-sm text-slate-800 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:bg-white transition"
+            placeholder="Cari berdasarkan nama, peran, direktorat, kampus..." 
+            class="w-full pl-9 pr-4 py-2 bg-slate-50 border border-slate-200 rounded-lg text-xs sm:text-sm text-slate-900 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-600 focus:bg-white transition"
           >
         </div>
 
-        <div class="grid grid-cols-[auto_1fr_auto] gap-2 items-center">
-          <select id="periodFilter" class="px-2.5 py-2 bg-emerald-50/40 border border-emerald-200 rounded-xl text-xs font-bold text-slate-700 focus:outline-none focus:ring-2 focus:ring-emerald-500">
-            <option value="ALL">Semua Periode</option>
-            <option value="2026/2027" selected>2026/2027</option>
-          </select>
+        <!-- Filter Array -->
+        <div class="flex items-center gap-2 overflow-x-auto custom-scrollbar pb-1 md:pb-0">
+          <div class="relative min-w-[130px]">
+            <select id="periodFilter" class="w-full appearance-none pl-3 pr-8 py-2 bg-slate-50 border border-slate-200 rounded-lg text-xs font-semibold text-slate-700 focus:outline-none focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-600 transition cursor-pointer">
+              <option value="ALL">Semua Periode</option>
+              <option value="2026/2027" selected>2026/2027</option>
+            </select>
+            <i data-lucide="chevron-down" class="w-3.5 h-3.5 text-slate-400 absolute right-2.5 top-1/2 -translate-y-1/2 pointer-events-none"></i>
+          </div>
 
-          <select id="divisionFilter" class="w-full px-2.5 py-2 bg-emerald-50/40 border border-emerald-200 rounded-xl text-xs font-semibold text-slate-700 focus:outline-none focus:ring-2 focus:ring-emerald-500 truncate">
-            <option value="ALL">Semua Direktorat / Unit</option>
-          </select>
+          <div class="relative min-w-[180px] max-w-[240px]">
+            <select id="divisionFilter" class="w-full appearance-none pl-3 pr-8 py-2 bg-slate-50 border border-slate-200 rounded-lg text-xs font-semibold text-slate-700 focus:outline-none focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-600 transition truncate cursor-pointer">
+              <option value="ALL">Semua Direktorat / Unit</option>
+            </select>
+            <i data-lucide="chevron-down" class="w-3.5 h-3.5 text-slate-400 absolute right-2.5 top-1/2 -translate-y-1/2 pointer-events-none"></i>
+          </div>
 
-          <button id="btnRefresh" title="Refresh Data" class="p-2 border border-emerald-200 rounded-xl hover:bg-emerald-50 text-emerald-700 transition flex items-center justify-center flex-shrink-0 active:scale-95">
-            <i data-lucide="refresh-cw" class="w-4 h-4" id="refreshIcon"></i>
+          <button id="btnRefresh" title="Sinkron Ulang Data" class="p-2 border border-slate-200 rounded-lg bg-slate-50 hover:bg-slate-100 text-slate-600 hover:text-slate-900 transition flex items-center justify-center flex-shrink-0 active:scale-95 shadow-subtle">
+            <i data-lucide="rotate-cw" class="w-4 h-4" id="refreshIcon"></i>
           </button>
         </div>
+
       </div>
 
-      <!-- Grid Kartu Anggota -->
+      <!-- Member Cards Container -->
       <div id="membersContainer" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-5">
         <div class="col-span-full py-16 flex flex-col items-center justify-center text-center space-y-3">
-          <div class="w-8 h-8 border-4 border-emerald-600 border-t-transparent rounded-full animate-spin"></div>
-          <p class="text-xs sm:text-sm text-slate-500 font-medium">Memuat data anggota...</p>
+          <div class="w-7 h-7 border-2 border-emerald-600 border-t-transparent rounded-full animate-spin"></div>
+          <p class="text-xs font-semibold text-slate-500 tracking-tight">Memuat pangkalan data personel...</p>
         </div>
       </div>
+
     </div>
 
     <!-- ========================================== -->
-    <!-- VIEW 2: ASET DESAIN & LOGO                 -->
+    <!-- VIEW 2: MEDIA KIT & ASET DESAIN            -->
     <!-- ========================================== -->
-    <div id="viewAssets" class="space-y-4 sm:space-y-6 hidden">
-      <!-- Top Banner Aset -->
-      <div class="bg-gradient-to-r from-teal-900 via-emerald-800 to-slate-900 rounded-2xl p-4 sm:p-6 lg:p-8 text-white relative overflow-hidden shadow-md border border-emerald-800">
-        <div class="absolute -right-8 -bottom-10 w-60 sm:w-72 h-60 sm:h-72 bg-teal-500/15 rounded-full blur-3xl pointer-events-none"></div>
-        <div class="relative z-10 max-w-2xl space-y-1.5 sm:space-y-2">
-          <span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 sm:px-3 sm:py-1 rounded-full text-[10px] sm:text-xs font-bold bg-teal-500/20 text-teal-200 border border-teal-400/30">
-            <i data-lucide="folder-git-2" class="w-3 h-3 sm:w-3.5 sm:h-3.5 text-teal-300"></i> Media Kit & Brand Assets
-          </span>
-          <h2 class="text-base sm:text-xl lg:text-2xl font-extrabold tracking-tight">
-            Koleksi Aset & Identitas Visual Hareudang
-          </h2>
-          <p class="text-[11px] sm:text-xs lg:text-sm text-teal-100/90 leading-relaxed">
-            Repository logo resmi, watermark, tipografi, dan template desain siap pakai. Klik unduh file asli atau salin tautan langsung.
-          </p>
+    <div id="viewAssets" class="space-y-6 hidden">
+      
+      <!-- Brand Asset Overview Header -->
+      <div class="bg-white rounded-2xl p-5 sm:p-6 border border-slate-200/80 shadow-card">
+        <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
+          <div class="space-y-1">
+            <div class="flex items-center gap-2 text-xs font-semibold text-teal-800">
+              ARSIP MEDIA & IDENTITAS VISUAL RESMI
+            </div>
+            <h2 class="text-xl sm:text-2xl font-bold text-slate-900 tracking-tight">
+              Katalog Aset Desain & Logo Hareudang
+            </h2>
+            <p class="text-xs sm:text-sm text-slate-500 max-w-2xl leading-relaxed">
+              Repository logo resmi, watermark, tipografi, dan template desain siap pakai. Klik unduh file asli atau salin tautan langsung.
+            </p>
+          </div>
+
+          <div class="grid grid-cols-2 gap-3 border-t md:border-t-0 md:border-l border-slate-100 pt-3 md:pt-0 md:pl-6 flex-shrink-0">
+            <div class="bg-slate-50 rounded-xl p-3 border border-slate-100">
+              <span class="block text-[11px] font-medium text-slate-500">Total File</span>
+              <span id="metricTotalAssets" class="text-sm font-bold text-slate-900 font-mono-tag">0 Item</span>
+            </div>
+            <div class="bg-slate-50 rounded-xl p-3 border border-slate-100">
+              <span class="block text-[11px] font-medium text-slate-500">Akses Unduh</span>
+              <span class="text-sm font-bold text-teal-700 font-mono-tag">Public/Raw</span>
+            </div>
+          </div>
         </div>
       </div>
 
-      <!-- Toolbar Aset Mobile-Friendly -->
-      <div class="bg-white p-3 sm:p-4 rounded-2xl border border-emerald-100 shadow-sm flex flex-col sm:flex-row gap-2.5 sm:gap-3 items-stretch sm:items-center justify-between">
-        <div class="relative flex-1 sm:max-w-xs">
-          <i data-lucide="search" class="w-4 h-4 text-emerald-600 absolute left-3 top-1/2 -translate-y-1/2"></i>
+      <!-- Asset Filters -->
+      <div class="bg-white p-3.5 sm:p-4 rounded-xl border border-slate-200/80 shadow-subtle flex flex-col sm:flex-row gap-3 items-stretch sm:items-center justify-between">
+        <div class="relative flex-1 sm:max-w-md">
+          <i data-lucide="search" class="w-4 h-4 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2"></i>
           <input 
             type="text" 
             id="searchAssetInput" 
-            placeholder="Cari nama aset, format, kategori..." 
-            class="w-full pl-9 pr-4 py-2 bg-emerald-50/40 border border-emerald-200 rounded-xl text-xs sm:text-sm text-slate-800 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:bg-white transition"
+            placeholder="Cari nama aset, format berkas, atau kategori..." 
+            class="w-full pl-9 pr-4 py-2 bg-slate-50 border border-slate-200 rounded-lg text-xs sm:text-sm text-slate-900 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-teal-500/20 focus:border-teal-600 focus:bg-white transition"
           >
         </div>
 
-        <div class="flex items-center gap-2">
-          <select id="assetCategoryFilter" class="w-full sm:w-auto px-3 py-2 bg-emerald-50/40 border border-emerald-200 rounded-xl text-xs sm:text-sm text-slate-700 font-semibold focus:outline-none focus:ring-2 focus:ring-emerald-500">
-            <option value="ALL">Semua Kategori</option>
+        <div class="relative min-w-[190px]">
+          <select id="assetCategoryFilter" class="w-full appearance-none pl-3 pr-8 py-2 bg-slate-50 border border-slate-200 rounded-lg text-xs font-semibold text-slate-700 focus:outline-none focus:ring-2 focus:ring-teal-500/20 focus:border-teal-600 transition cursor-pointer">
+            <option value="ALL">Semua Kategori Aset</option>
             <option value="Logo & Branding">Logo & Branding</option>
             <option value="Watermark & Badge">Watermark & Badge</option>
             <option value="Template Desain">Template Desain</option>
             <option value="Elemen & Vektor">Elemen & Vektor</option>
             <option value="Font & Media Kit">Font & Media Kit</option>
           </select>
+          <i data-lucide="chevron-down" class="w-3.5 h-3.5 text-slate-400 absolute right-2.5 top-1/2 -translate-y-1/2 pointer-events-none"></i>
         </div>
       </div>
 
-      <!-- Grid Kartu Aset Desain -->
+      <!-- Assets Grid Container -->
       <div id="assetsContainer" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-5">
         <div class="col-span-full py-16 flex flex-col items-center justify-center text-center space-y-3">
-          <div class="w-8 h-8 border-4 border-emerald-600 border-t-transparent rounded-full animate-spin"></div>
-          <p class="text-xs sm:text-sm text-slate-500 font-medium">Memuat aset desain...</p>
+          <div class="w-7 h-7 border-2 border-teal-600 border-t-transparent rounded-full animate-spin"></div>
+          <p class="text-xs font-semibold text-slate-500 tracking-tight">Memuat repositori aset visual...</p>
         </div>
       </div>
+
     </div>
 
   </main>
 
-  <!-- Datalist Options -->
+  <!-- ========================================== -->
+  <!-- DATALISTS FORM AUTOCOMPLETE                -->
+  <!-- ========================================== -->
   <datalist id="periodSuggestions">
     <option value="2026/2027"></option>
     <option value="2025/2026"></option>
@@ -297,245 +372,236 @@
     <option value="Poltekkes Kemenkes Bandung"></option>
   </datalist>
 
-  <!-- Modal: Tambah Anggota Satuan -->
-  <div id="modalAdd" class="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-sm hidden items-end sm:items-center justify-center p-0 sm:p-4 overflow-y-auto">
-    <div class="bg-white rounded-t-3xl sm:rounded-2xl max-w-lg w-full border border-emerald-100 shadow-2xl overflow-hidden max-h-[92vh] flex flex-col animate-in fade-in zoom-in-95 duration-150">
-      <div class="px-5 py-3.5 border-b border-emerald-100 flex items-center justify-between bg-emerald-50/50 flex-shrink-0">
-        <div class="flex items-center gap-2.5">
-          <div class="w-7 h-7 sm:w-8 sm:h-8 rounded-lg bg-emerald-600 text-white flex items-center justify-center font-bold">
-            <i data-lucide="user-plus" class="w-4 h-4"></i>
-          </div>
-          <div>
-            <h3 class="font-bold text-slate-800 text-sm sm:text-base">Tambah Anggota Baru</h3>
-            <p class="text-[11px] text-slate-500">Foto opsional, bisa diunggah menyusul</p>
-          </div>
+  <!-- ========================================== -->
+  <!-- ENTERPRISE MODALS                          -->
+  <!-- ========================================== -->
+
+  <!-- Modal: Tambah Personel Satuan -->
+  <div id="modalAdd" class="fixed inset-0 z-50 bg-slate-900/50 backdrop-blur-sm hidden items-end sm:items-center justify-center p-0 sm:p-4 overflow-y-auto">
+    <div class="bg-white rounded-t-2xl sm:rounded-2xl max-w-lg w-full border border-slate-200 shadow-elevated overflow-hidden max-h-[92vh] flex flex-col animate-in fade-in zoom-in-95 duration-150">
+      
+      <div class="px-5 py-4 border-b border-slate-100 flex items-center justify-between bg-slate-50/70 flex-shrink-0">
+        <div>
+          <h3 class="font-bold text-slate-900 text-sm sm:text-base tracking-tight">Pendaftaran Anggota Baru</h3>
+          <p class="text-xs text-slate-500 mt-0.5">Penambahan entri kepengurusan resmi ke database cloud.</p>
         </div>
-        <button id="btnCloseModal" class="p-1 rounded-lg text-slate-400 hover:text-slate-600 hover:bg-slate-100">
-          <i data-lucide="x" class="w-5 h-5"></i>
+        <button id="btnCloseModal" class="p-1.5 rounded-lg text-slate-400 hover:text-slate-600 hover:bg-slate-200/60 transition">
+          <i data-lucide="x" class="w-4 h-4"></i>
         </button>
       </div>
 
-      <form id="formAddMember" class="p-4 sm:p-6 space-y-3.5 sm:space-y-4 overflow-y-auto custom-scrollbar">
+      <form id="formAddMember" class="p-5 space-y-4 overflow-y-auto custom-scrollbar">
         <div>
-          <label class="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-1">Nama Lengkap *</label>
-          <input type="text" id="inputNama" required placeholder="Contoh: Muhammad Salman, S.Ds." class="w-full px-3.5 py-2 sm:py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:bg-white transition">
+          <label class="block text-xs font-semibold text-slate-700 mb-1">Nama Lengkap & Gelar *</label>
+          <input type="text" id="inputNama" required placeholder="Contoh: Muhammad Salman, S.Ds." class="w-full px-3.5 py-2 bg-slate-50 border border-slate-200 rounded-lg text-xs sm:text-sm text-slate-900 focus:outline-none focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-600 focus:bg-white transition">
         </div>
 
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
           <div>
-            <label class="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-1">Direktorat / Unit *</label>
-            <input type="text" id="inputDivisi" required list="divisionSuggestions" placeholder="Pilih Direktorat..." class="w-full px-3.5 py-2 sm:py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:bg-white transition">
+            <label class="block text-xs font-semibold text-slate-700 mb-1">Direktorat / Unit *</label>
+            <input type="text" id="inputDivisi" required list="divisionSuggestions" placeholder="Pilih atau ketik unit..." class="w-full px-3.5 py-2 bg-slate-50 border border-slate-200 rounded-lg text-xs sm:text-sm text-slate-900 focus:outline-none focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-600 focus:bg-white transition">
           </div>
           <div>
-            <label class="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-1">Role / Jabatan *</label>
-            <input type="text" id="inputRole" required list="roleSuggestions" placeholder="Director, Staff..." class="w-full px-3.5 py-2 sm:py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:bg-white transition">
+            <label class="block text-xs font-semibold text-slate-700 mb-1">Posisi / Role *</label>
+            <input type="text" id="inputRole" required list="roleSuggestions" placeholder="Director, Associate..." class="w-full px-3.5 py-2 bg-slate-50 border border-slate-200 rounded-lg text-xs sm:text-sm text-slate-900 focus:outline-none focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-600 focus:bg-white transition">
           </div>
         </div>
 
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
           <div>
-            <label class="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-1">Universitas / Instansi *</label>
-            <input type="text" id="inputUniversitas" required list="universitySuggestions" placeholder="Asal Kampus..." class="w-full px-3.5 py-2 sm:py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:bg-white transition">
+            <label class="block text-xs font-semibold text-slate-700 mb-1">Universitas / Lembaga Asal *</label>
+            <input type="text" id="inputUniversitas" required list="universitySuggestions" placeholder="Nama perguruan tinggi..." class="w-full px-3.5 py-2 bg-slate-50 border border-slate-200 rounded-lg text-xs sm:text-sm text-slate-900 focus:outline-none focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-600 focus:bg-white transition">
           </div>
           <div>
-            <label class="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-1">Periode Kepengurusan *</label>
-            <input type="text" id="inputPeriode" required list="periodSuggestions" value="2026/2027" placeholder="Contoh: 2026/2027" class="w-full px-3.5 py-2 sm:py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm font-semibold text-emerald-800 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:bg-white transition">
+            <label class="block text-xs font-semibold text-slate-700 mb-1">Periode Masa Bakti *</label>
+            <input type="text" id="inputPeriode" required list="periodSuggestions" value="2026/2027" class="w-full px-3.5 py-2 bg-slate-50 border border-slate-200 rounded-lg text-xs sm:text-sm font-semibold text-slate-900 focus:outline-none focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-600 focus:bg-white transition font-mono-tag">
           </div>
         </div>
 
         <div>
-          <label class="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-1">File Foto HD (Opsional)</label>
-          <div id="dropZone" class="border-2 border-dashed border-emerald-200 hover:border-emerald-500 rounded-xl p-3 sm:p-4 text-center cursor-pointer transition bg-emerald-50/20 hover:bg-emerald-50/40">
+          <label class="block text-xs font-semibold text-slate-700 mb-1">Pas Foto Resolusi Tinggi (Opsional)</label>
+          <div id="dropZone" class="border border-dashed border-slate-300 hover:border-emerald-500 rounded-xl p-4 text-center cursor-pointer transition bg-slate-50/50 hover:bg-emerald-50/30">
             <input type="file" id="inputFile" accept="image/*" class="hidden">
-            <div id="uploadPlaceholder" class="space-y-1 py-1">
-              <i data-lucide="upload-cloud" class="w-6 h-6 sm:w-7 sm:h-7 text-emerald-600 mx-auto"></i>
-              <p class="text-xs font-semibold text-slate-700">Klik untuk upload foto</p>
+            <div id="uploadPlaceholder" class="space-y-1.5 py-1">
+              <i data-lucide="image" class="w-6 h-6 text-slate-400 mx-auto"></i>
+              <p class="text-xs font-semibold text-slate-700">Pilih atau letakkan berkas foto di sini</p>
+              <p class="text-[11px] text-slate-400">PNG, JPG, atau WEBP berlatar bersih</p>
             </div>
             <div id="uploadPreview" class="hidden flex items-center gap-3 text-left">
-              <img id="previewImg" src="" alt="Preview" class="w-12 h-12 rounded-lg object-cover border border-emerald-200">
+              <img id="previewImg" src="" alt="Preview" class="w-12 h-12 rounded-lg object-cover border border-slate-200 shadow-sm">
               <div class="flex-1 min-w-0">
                 <p id="previewName" class="text-xs font-bold text-slate-800 truncate"></p>
-                <button type="button" id="btnRemoveFile" class="text-[11px] text-rose-600 font-bold hover:underline">Hapus Foto</button>
+                <button type="button" id="btnRemoveFile" class="text-[11px] text-rose-600 font-semibold hover:underline mt-0.5">Ganti Foto</button>
               </div>
             </div>
           </div>
         </div>
 
-        <div class="pt-2 flex gap-2">
-          <button type="button" id="btnCancelModal" class="flex-1 py-2.5 rounded-xl border border-slate-200 text-slate-700 text-xs sm:text-sm font-semibold hover:bg-slate-100 transition">Batal</button>
-          <button type="submit" id="btnSubmitForm" class="flex-1 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs sm:text-sm font-semibold shadow-md shadow-emerald-200 flex items-center justify-center gap-2 transition disabled:opacity-50">
-            <i data-lucide="upload" class="w-4 h-4"></i>
-            <span id="submitBtnText">Simpan Data</span>
+        <div class="pt-3 border-t border-slate-100 flex items-center gap-2">
+          <button type="button" id="btnCancelModal" class="flex-1 py-2 rounded-lg border border-slate-200 text-slate-700 text-xs font-semibold hover:bg-slate-50 transition">Batalkan</button>
+          <button type="submit" id="btnSubmitForm" class="flex-1 py-2 rounded-lg bg-slate-900 hover:bg-slate-800 text-white text-xs font-semibold shadow-subtle transition disabled:opacity-50">
+            <span id="submitBtnText">Simpan Entri</span>
           </button>
         </div>
       </form>
+
     </div>
   </div>
 
-  <!-- Modal: Import Banyak Sekaligus -->
-  <div id="modalBulk" class="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-sm hidden items-end sm:items-center justify-center p-0 sm:p-4 overflow-y-auto">
-    <div class="bg-white rounded-t-3xl sm:rounded-2xl max-w-xl w-full border border-emerald-100 shadow-2xl overflow-hidden max-h-[92vh] flex flex-col animate-in fade-in zoom-in-95 duration-150">
-      <div class="px-5 py-3.5 border-b border-emerald-100 flex items-center justify-between bg-emerald-50/50 flex-shrink-0">
-        <div class="flex items-center gap-2.5">
-          <div class="w-7 h-7 sm:w-8 sm:h-8 rounded-lg bg-emerald-600 text-white flex items-center justify-center font-bold">
-            <i data-lucide="list-plus" class="w-4 h-4"></i>
-          </div>
-          <div>
-            <h3 class="font-bold text-slate-800 text-sm sm:text-base">Import Banyak Anggota Sekaligus</h3>
-            <p class="text-[11px] text-slate-500">Bisa langsung copas tabel dari PDF atau Excel</p>
-          </div>
+  <!-- Modal: Import Massal (Bulk Insertion) -->
+  <div id="modalBulk" class="fixed inset-0 z-50 bg-slate-900/50 backdrop-blur-sm hidden items-end sm:items-center justify-center p-0 sm:p-4 overflow-y-auto">
+    <div class="bg-white rounded-t-2xl sm:rounded-2xl max-w-xl w-full border border-slate-200 shadow-elevated overflow-hidden max-h-[92vh] flex flex-col animate-in fade-in zoom-in-95 duration-150">
+      
+      <div class="px-5 py-4 border-b border-slate-100 flex items-center justify-between bg-slate-50/70 flex-shrink-0">
+        <div>
+          <h3 class="font-bold text-slate-900 text-sm sm:text-base tracking-tight">Import Entri Massal</h3>
+          <p class="text-xs text-slate-500 mt-0.5">Salin dan tempel daftar data langsung dari tabel PDF atau spreadsheet.</p>
         </div>
-        <button id="btnCloseBulk" class="p-1 rounded-lg text-slate-400 hover:text-slate-600 hover:bg-slate-100">
-          <i data-lucide="x" class="w-5 h-5"></i>
+        <button id="btnCloseBulk" class="p-1.5 rounded-lg text-slate-400 hover:text-slate-600 hover:bg-slate-200/60 transition">
+          <i data-lucide="x" class="w-4 h-4"></i>
         </button>
       </div>
 
-      <div class="p-4 sm:p-6 space-y-3.5 overflow-y-auto custom-scrollbar">
-        <div class="bg-emerald-50/50 p-3 rounded-xl border border-emerald-100 flex items-center justify-between gap-2">
+      <div class="p-5 space-y-3.5 overflow-y-auto custom-scrollbar">
+        <div class="bg-slate-50 p-3 rounded-xl border border-slate-200/70 flex items-center justify-between gap-3">
           <div>
-            <label class="block text-xs font-bold text-emerald-900">Periode Default:</label>
-            <p class="text-[10px] sm:text-[11px] text-slate-500">Dipasang jika kolom periode di baris kosong</p>
+            <label class="block text-xs font-semibold text-slate-800">Target Periode Kepengurusan</label>
+            <p class="text-[11px] text-slate-500">Diterapkan jika baris entri tidak memuat kolom tahun</p>
           </div>
           <input 
             type="text" 
             id="bulkDefaultPeriode" 
             value="2026/2027" 
             list="periodSuggestions" 
-            class="w-28 sm:w-32 px-2.5 py-1.5 bg-white border border-emerald-200 rounded-lg text-xs font-bold text-emerald-800 focus:outline-none focus:ring-2 focus:ring-emerald-500 text-center"
+            class="w-32 px-2.5 py-1.5 bg-white border border-slate-200 rounded-lg text-xs font-bold text-slate-800 text-center font-mono-tag focus:outline-none focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-600"
           >
         </div>
 
         <div>
-          <label class="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-1">Daftar Anggota</label>
+          <label class="block text-xs font-semibold text-slate-700 mb-1">
+            Format: <span class="font-mono text-[11px] text-emerald-800 font-semibold">Nama, Direktorat, Role, Universitas</span>
+          </label>
           <textarea 
             id="bulkInputText" 
-            rows="6" 
-            placeholder="Format: Nama, Direktorat, Role, Universitas Asal&#10;&#10;Contoh:&#10;Muhammad Valdis Aldevhan, Executive Director, Executive Director, Universitas Komputer Indonesia"
-            class="w-full p-3 bg-slate-50 border border-slate-200 rounded-xl text-xs font-mono focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:bg-white transition custom-scrollbar"
+            rows="7" 
+            placeholder="Contoh:&#10;Muhammad Valdis Aldevhan, Executive Director, Executive Director, Universitas Komputer Indonesia&#10;Mathla Nurrahma, Secretariat & Finance, Secretary, Institut Teknologi Nasional Bandung"
+            class="w-full p-3 bg-slate-50 border border-slate-200 rounded-xl text-xs font-mono focus:outline-none focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-600 focus:bg-white transition custom-scrollbar"
           ></textarea>
         </div>
 
-        <div id="bulkPreviewCount" class="text-xs font-bold text-emerald-800 bg-emerald-50 px-3 py-2 rounded-lg border border-emerald-200 hidden">
-          Terdeteksi <span id="parsedCount">0</span> anggota siap diimpor.
+        <div id="bulkPreviewCount" class="text-xs font-semibold text-emerald-800 bg-emerald-50/80 px-3 py-2 rounded-lg border border-emerald-200/70 hidden">
+          Teridentifikasi <span id="parsedCount" class="font-bold">0</span> entri terstruktur siap diproses.
         </div>
 
         <div class="pt-2 flex gap-2">
-          <button type="button" id="btnCancelBulk" class="flex-1 py-2.5 rounded-xl border border-slate-200 text-slate-700 text-xs sm:text-sm font-semibold hover:bg-slate-100 transition">Batal</button>
-          <button type="button" id="btnSubmitBulk" class="flex-1 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs sm:text-sm font-semibold shadow-md shadow-emerald-200 flex items-center justify-center gap-2 transition disabled:opacity-50">
-            <i data-lucide="check-check" class="w-4 h-4"></i>
-            <span id="bulkBtnText">Mulai Import</span>
+          <button type="button" id="btnCancelBulk" class="flex-1 py-2 rounded-lg border border-slate-200 text-slate-700 text-xs font-semibold hover:bg-slate-50 transition">Batalkan</button>
+          <button type="button" id="btnSubmitBulk" class="flex-1 py-2 rounded-lg bg-slate-900 hover:bg-slate-800 text-white text-xs font-semibold shadow-subtle transition disabled:opacity-50">
+            <span id="bulkBtnText">Mulai Proses Import</span>
           </button>
         </div>
       </div>
+
     </div>
   </div>
 
-  <!-- Modal: Edit Anggota -->
-  <div id="modalEdit" class="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-sm hidden items-end sm:items-center justify-center p-0 sm:p-4 overflow-y-auto">
-    <div class="bg-white rounded-t-3xl sm:rounded-2xl max-w-lg w-full border border-emerald-100 shadow-2xl overflow-hidden max-h-[92vh] flex flex-col animate-in fade-in zoom-in-95 duration-150">
-      <div class="px-5 py-3.5 border-b border-emerald-100 flex items-center justify-between bg-emerald-50/50 flex-shrink-0">
-        <div class="flex items-center gap-2.5">
-          <div class="w-7 h-7 sm:w-8 sm:h-8 rounded-lg bg-emerald-600 text-white flex items-center justify-center font-bold">
-            <i data-lucide="edit" class="w-4 h-4"></i>
-          </div>
-          <div>
-            <h3 class="font-bold text-slate-800 text-sm sm:text-base">Edit Data & Foto</h3>
-            <p class="text-[11px] text-slate-500">Perbarui profil, periode, atau unggah foto asli</p>
-          </div>
+  <!-- Modal: Pembaruan Data Personel -->
+  <div id="modalEdit" class="fixed inset-0 z-50 bg-slate-900/50 backdrop-blur-sm hidden items-end sm:items-center justify-center p-0 sm:p-4 overflow-y-auto">
+    <div class="bg-white rounded-t-2xl sm:rounded-2xl max-w-lg w-full border border-slate-200 shadow-elevated overflow-hidden max-h-[92vh] flex flex-col animate-in fade-in zoom-in-95 duration-150">
+      
+      <div class="px-5 py-4 border-b border-slate-100 flex items-center justify-between bg-slate-50/70 flex-shrink-0">
+        <div>
+          <h3 class="font-bold text-slate-900 text-sm sm:text-base tracking-tight">Edit Informasi Personel</h3>
+          <p class="text-xs text-slate-500 mt-0.5">Perbarui catatan jabatan, unit kerja, atau unggah foto baru.</p>
         </div>
-        <button id="btnCloseEdit" class="p-1 rounded-lg text-slate-400 hover:text-slate-600 hover:bg-slate-100">
-          <i data-lucide="x" class="w-5 h-5"></i>
+        <button id="btnCloseEdit" class="p-1.5 rounded-lg text-slate-400 hover:text-slate-600 hover:bg-slate-200/60 transition">
+          <i data-lucide="x" class="w-4 h-4"></i>
         </button>
       </div>
 
-      <form id="formEditMember" class="p-4 sm:p-6 space-y-3.5 overflow-y-auto custom-scrollbar">
+      <form id="formEditMember" class="p-5 space-y-4 overflow-y-auto custom-scrollbar">
         <input type="hidden" id="editRowIndex">
         <input type="hidden" id="editOriginalNama">
 
         <div>
-          <label class="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-1">Nama Lengkap *</label>
-          <input type="text" id="editNama" required class="w-full px-3.5 py-2 sm:py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:bg-white transition">
+          <label class="block text-xs font-semibold text-slate-700 mb-1">Nama Lengkap & Gelar *</label>
+          <input type="text" id="editNama" required class="w-full px-3.5 py-2 bg-slate-50 border border-slate-200 rounded-lg text-xs sm:text-sm text-slate-900 focus:outline-none focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-600 focus:bg-white transition">
         </div>
 
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
           <div>
-            <label class="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-1">Direktorat / Unit *</label>
-            <input type="text" id="editDivisi" required list="divisionSuggestions" class="w-full px-3.5 py-2 sm:py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:bg-white transition">
+            <label class="block text-xs font-semibold text-slate-700 mb-1">Direktorat / Unit *</label>
+            <input type="text" id="editDivisi" required list="divisionSuggestions" class="w-full px-3.5 py-2 bg-slate-50 border border-slate-200 rounded-lg text-xs sm:text-sm text-slate-900 focus:outline-none focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-600 focus:bg-white transition">
           </div>
           <div>
-            <label class="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-1">Role / Jabatan *</label>
-            <input type="text" id="editRole" required list="roleSuggestions" class="w-full px-3.5 py-2 sm:py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:bg-white transition">
+            <label class="block text-xs font-semibold text-slate-700 mb-1">Posisi / Role *</label>
+            <input type="text" id="editRole" required list="roleSuggestions" class="w-full px-3.5 py-2 bg-slate-50 border border-slate-200 rounded-lg text-xs sm:text-sm text-slate-900 focus:outline-none focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-600 focus:bg-white transition">
           </div>
         </div>
 
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
           <div>
-            <label class="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-1">Universitas / Instansi *</label>
-            <input type="text" id="editUniversitas" required list="universitySuggestions" class="w-full px-3.5 py-2 sm:py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:bg-white transition">
+            <label class="block text-xs font-semibold text-slate-700 mb-1">Universitas / Lembaga *</label>
+            <input type="text" id="editUniversitas" required list="universitySuggestions" class="w-full px-3.5 py-2 bg-slate-50 border border-slate-200 rounded-lg text-xs sm:text-sm text-slate-900 focus:outline-none focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-600 focus:bg-white transition">
           </div>
           <div>
-            <label class="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-1">Periode *</label>
-            <input type="text" id="editPeriode" required list="periodSuggestions" class="w-full px-3.5 py-2 sm:py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm font-semibold text-emerald-800 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:bg-white transition">
+            <label class="block text-xs font-semibold text-slate-700 mb-1">Periode Masa Bakti *</label>
+            <input type="text" id="editPeriode" required list="periodSuggestions" class="w-full px-3.5 py-2 bg-slate-50 border border-slate-200 rounded-lg text-xs sm:text-sm font-semibold text-slate-900 focus:outline-none focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-600 focus:bg-white transition font-mono-tag">
           </div>
         </div>
 
         <div>
-          <label class="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-1">Upload / Ganti Foto HD</label>
-          <div id="dropZoneEdit" class="border-2 border-dashed border-emerald-200 hover:border-emerald-500 rounded-xl p-3 sm:p-4 text-center cursor-pointer transition bg-emerald-50/20 hover:bg-emerald-50/40">
+          <label class="block text-xs font-semibold text-slate-700 mb-1">Perbarui Foto Resolusi Tinggi</label>
+          <div id="dropZoneEdit" class="border border-dashed border-slate-300 hover:border-emerald-500 rounded-xl p-4 text-center cursor-pointer transition bg-slate-50/50 hover:bg-emerald-50/30">
             <input type="file" id="inputFileEdit" accept="image/*" class="hidden">
-            <div id="uploadPlaceholderEdit" class="space-y-1 py-1">
-              <i data-lucide="upload-cloud" class="w-6 h-6 sm:w-7 sm:h-7 text-emerald-600 mx-auto"></i>
-              <p class="text-xs font-semibold text-slate-700">Klik untuk upload foto baru</p>
+            <div id="uploadPlaceholderEdit" class="space-y-1.5 py-1">
+              <i data-lucide="refresh-cw" class="w-5 h-5 text-slate-400 mx-auto"></i>
+              <p class="text-xs font-semibold text-slate-700">Klik untuk mengunggah foto pengganti</p>
             </div>
             <div id="uploadPreviewEdit" class="hidden flex items-center gap-3 text-left">
-              <img id="previewImgEdit" src="" alt="Preview" class="w-12 h-12 rounded-lg object-cover border border-emerald-200">
+              <img id="previewImgEdit" src="" alt="Preview" class="w-12 h-12 rounded-lg object-cover border border-slate-200 shadow-sm">
               <div class="flex-1 min-w-0">
                 <p id="previewNameEdit" class="text-xs font-bold text-slate-800 truncate"></p>
-                <button type="button" id="btnRemoveFileEdit" class="text-[11px] text-rose-600 font-bold hover:underline">Hapus Foto</button>
+                <button type="button" id="btnRemoveFileEdit" class="text-[11px] text-rose-600 font-semibold hover:underline mt-0.5">Batalkan Foto Baru</button>
               </div>
             </div>
           </div>
         </div>
 
-        <div class="pt-2 flex gap-2">
-          <button type="button" id="btnCancelEdit" class="flex-1 py-2.5 rounded-xl border border-slate-200 text-slate-700 text-xs sm:text-sm font-semibold hover:bg-slate-100 transition">Batal</button>
-          <button type="submit" id="btnSubmitEdit" class="flex-1 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs sm:text-sm font-semibold shadow-md shadow-emerald-200 flex items-center justify-center gap-2 transition disabled:opacity-50">
-            <i data-lucide="save" class="w-4 h-4"></i>
-            <span id="editBtnText">Simpan</span>
+        <div class="pt-3 border-t border-slate-100 flex items-center gap-2">
+          <button type="button" id="btnCancelEdit" class="flex-1 py-2 rounded-lg border border-slate-200 text-slate-700 text-xs font-semibold hover:bg-slate-50 transition">Batalkan</button>
+          <button type="submit" id="btnSubmitEdit" class="flex-1 py-2 rounded-lg bg-slate-900 hover:bg-slate-800 text-white text-xs font-semibold shadow-subtle transition disabled:opacity-50">
+            <span id="editBtnText">Simpan Perubahan</span>
           </button>
         </div>
       </form>
+
     </div>
   </div>
 
-  <!-- Modal: Upload Aset Desain Baru -->
-  <div id="modalAddAsset" class="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-sm hidden items-end sm:items-center justify-center p-0 sm:p-4 overflow-y-auto">
-    <div class="bg-white rounded-t-3xl sm:rounded-2xl max-w-lg w-full border border-emerald-100 shadow-2xl overflow-hidden max-h-[92vh] flex flex-col animate-in fade-in zoom-in-95 duration-150">
-      <div class="px-5 py-3.5 border-b border-emerald-100 flex items-center justify-between bg-emerald-50/50 flex-shrink-0">
-        <div class="flex items-center gap-2.5">
-          <div class="w-7 h-7 sm:w-8 sm:h-8 rounded-lg bg-emerald-600 text-white flex items-center justify-center font-bold">
-            <i data-lucide="palette" class="w-4 h-4"></i>
-          </div>
-          <div>
-            <h3 class="font-bold text-slate-800 text-sm sm:text-base">Upload Aset Desain Baru</h3>
-            <p class="text-[11px] text-slate-500">Logo, Watermark, Banner, atau File Grafis</p>
-          </div>
+  <!-- Modal: Upload Aset Grafis Baru -->
+  <div id="modalAddAsset" class="fixed inset-0 z-50 bg-slate-900/50 backdrop-blur-sm hidden items-end sm:items-center justify-center p-0 sm:p-4 overflow-y-auto">
+    <div class="bg-white rounded-t-2xl sm:rounded-2xl max-w-lg w-full border border-slate-200 shadow-elevated overflow-hidden max-h-[92vh] flex flex-col animate-in fade-in zoom-in-95 duration-150">
+      
+      <div class="px-5 py-4 border-b border-slate-100 flex items-center justify-between bg-slate-50/70 flex-shrink-0">
+        <div>
+          <h3 class="font-bold text-slate-900 text-sm sm:text-base tracking-tight">Upload Aset Brand Baru</h3>
+          <p class="text-xs text-slate-500 mt-0.5">Integrasikan logo, elemen vektor, atau panduan media kit.</p>
         </div>
-        <button id="btnCloseAddAsset" class="p-1 rounded-lg text-slate-400 hover:text-slate-600 hover:bg-slate-100">
-          <i data-lucide="x" class="w-5 h-5"></i>
+        <button id="btnCloseAddAsset" class="p-1.5 rounded-lg text-slate-400 hover:text-slate-600 hover:bg-slate-200/60 transition">
+          <i data-lucide="x" class="w-4 h-4"></i>
         </button>
       </div>
 
-      <form id="formAddAsset" class="p-4 sm:p-6 space-y-3.5 overflow-y-auto custom-scrollbar">
+      <form id="formAddAsset" class="p-5 space-y-4 overflow-y-auto custom-scrollbar">
         <div>
-          <label class="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-1">Nama Aset *</label>
-          <input type="text" id="assetNama" required placeholder="Contoh: Logo Hareudang Putih Transparan (PNG HD)" class="w-full px-3.5 py-2 sm:py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:bg-white transition">
+          <label class="block text-xs font-semibold text-slate-700 mb-1">Nama Deskriptif Aset *</label>
+          <input type="text" id="assetNama" required placeholder="Contoh: Logo Utama Hareudang Monokrom (Vektor)" class="w-full px-3.5 py-2 bg-slate-50 border border-slate-200 rounded-lg text-xs sm:text-sm text-slate-900 focus:outline-none focus:ring-2 focus:ring-teal-500/20 focus:border-teal-600 focus:bg-white transition">
         </div>
 
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
           <div>
-            <label class="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-1">Kategori Aset *</label>
-            <select id="assetKategori" required class="w-full px-3.5 py-2 sm:py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:bg-white transition">
+            <label class="block text-xs font-semibold text-slate-700 mb-1">Klasifikasi Aset *</label>
+            <select id="assetKategori" required class="w-full px-3.5 py-2 bg-slate-50 border border-slate-200 rounded-lg text-xs sm:text-sm font-semibold text-slate-900 focus:outline-none focus:ring-2 focus:ring-teal-500/20 focus:border-teal-600 focus:bg-white transition">
               <option value="Logo & Branding">Logo & Branding</option>
               <option value="Watermark & Badge">Watermark & Badge</option>
               <option value="Template Desain">Template Desain</option>
@@ -544,94 +610,94 @@
             </select>
           </div>
           <div>
-            <label class="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-1">Format File *</label>
-            <input type="text" id="assetFormat" required placeholder="PNG, SVG, AI, PDF..." class="w-full px-3.5 py-2 sm:py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm font-semibold uppercase focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:bg-white transition">
+            <label class="block text-xs font-semibold text-slate-700 mb-1">Ekstensi Berkas *</label>
+            <input type="text" id="assetFormat" required placeholder="PNG, SVG, AI, PDF..." class="w-full px-3.5 py-2 bg-slate-50 border border-slate-200 rounded-lg text-xs sm:text-sm font-bold uppercase text-slate-900 focus:outline-none focus:ring-2 focus:ring-teal-500/20 focus:border-teal-600 focus:bg-white transition font-mono-tag">
           </div>
         </div>
 
         <div>
-          <label class="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-1">File Aset *</label>
-          <div id="dropZoneAsset" class="border-2 border-dashed border-emerald-200 hover:border-emerald-500 rounded-xl p-3 sm:p-4 text-center cursor-pointer transition bg-emerald-50/20 hover:bg-emerald-50/40">
+          <label class="block text-xs font-semibold text-slate-700 mb-1">Berkas Aset Asli *</label>
+          <div id="dropZoneAsset" class="border border-dashed border-slate-300 hover:border-teal-500 rounded-xl p-4 text-center cursor-pointer transition bg-slate-50/50 hover:bg-teal-50/30">
             <input type="file" id="inputFileAsset" required class="hidden">
-            <div id="uploadPlaceholderAsset" class="space-y-1 py-1.5">
-              <i data-lucide="upload-cloud" class="w-7 h-7 text-emerald-600 mx-auto"></i>
-              <p class="text-xs font-semibold text-slate-700">Klik atau geser file ke sini</p>
-              <p class="text-[10px] text-slate-400">PNG, SVG, JPG, PDF, ZIP, AI</p>
+            <div id="uploadPlaceholderAsset" class="space-y-1.5 py-2">
+              <i data-lucide="file-up" class="w-6 h-6 text-slate-400 mx-auto"></i>
+              <p class="text-xs font-semibold text-slate-700">Pilih atau letakkan dokumen aset</p>
+              <p class="text-[11px] text-slate-400">Dukungan format grafis raster, vektor, & arsip arsip</p>
             </div>
             <div id="uploadPreviewAsset" class="hidden flex items-center gap-3 text-left">
-              <div class="w-10 h-10 rounded-lg bg-emerald-100 text-emerald-800 flex items-center justify-center font-extrabold text-xs uppercase" id="previewAssetBadge">
+              <div class="w-10 h-10 rounded-lg bg-teal-50 text-teal-800 border border-teal-200 flex items-center justify-center font-bold text-xs uppercase font-mono-tag" id="previewAssetBadge">
                 FILE
               </div>
               <div class="flex-1 min-w-0">
                 <p id="previewAssetName" class="text-xs font-bold text-slate-800 truncate"></p>
-                <p id="previewAssetSize" class="text-[11px] text-slate-500"></p>
-                <button type="button" id="btnRemoveFileAsset" class="text-[11px] text-rose-600 font-bold hover:underline">Ganti File</button>
+                <p id="previewAssetSize" class="text-[11px] text-slate-400 font-mono-tag"></p>
+                <button type="button" id="btnRemoveFileAsset" class="text-[11px] text-rose-600 font-semibold hover:underline mt-0.5">Ganti Berkas</button>
               </div>
             </div>
           </div>
         </div>
 
-        <div class="pt-2 flex gap-2">
-          <button type="button" id="btnCancelAddAsset" class="flex-1 py-2.5 rounded-xl border border-slate-200 text-slate-700 text-xs sm:text-sm font-semibold hover:bg-slate-100 transition">Batal</button>
-          <button type="submit" id="btnSubmitAsset" class="flex-1 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs sm:text-sm font-semibold shadow-md shadow-emerald-200 flex items-center justify-center gap-2 transition disabled:opacity-50">
-            <i data-lucide="upload" class="w-4 h-4"></i>
-            <span id="submitAssetBtnText">Simpan</span>
+        <div class="pt-3 border-t border-slate-100 flex items-center gap-2">
+          <button type="button" id="btnCancelAddAsset" class="flex-1 py-2 rounded-lg border border-slate-200 text-slate-700 text-xs font-semibold hover:bg-slate-50 transition">Batalkan</button>
+          <button type="submit" id="btnSubmitAsset" class="flex-1 py-2 rounded-lg bg-slate-900 hover:bg-slate-800 text-white text-xs font-semibold shadow-subtle transition disabled:opacity-50">
+            <span id="submitAssetBtnText">Simpan ke Repositori</span>
           </button>
         </div>
       </form>
+
     </div>
   </div>
 
-  <!-- Modal: Hapus Anggota -->
-  <div id="modalDelete" class="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-sm hidden items-center justify-center p-4 overflow-y-auto">
-    <div class="bg-white rounded-2xl max-w-sm w-full border border-rose-100 shadow-2xl overflow-hidden p-5 sm:p-6 text-center space-y-3.5">
-      <div class="w-11 h-11 rounded-2xl bg-rose-50 text-rose-600 flex items-center justify-center mx-auto border border-rose-100">
+  <!-- Modal: Konfirmasi Hapus Personel -->
+  <div id="modalDelete" class="fixed inset-0 z-50 bg-slate-900/50 backdrop-blur-sm hidden items-center justify-center p-4 overflow-y-auto">
+    <div class="bg-white rounded-2xl max-w-sm w-full border border-slate-200 shadow-elevated overflow-hidden p-5 text-center space-y-3.5">
+      <div class="w-10 h-10 rounded-xl bg-rose-50 text-rose-600 flex items-center justify-center mx-auto border border-rose-100">
         <i data-lucide="trash-2" class="w-5 h-5"></i>
       </div>
       <div>
-        <h3 class="font-extrabold text-slate-900 text-base">Hapus Anggota?</h3>
+        <h3 class="font-bold text-slate-900 text-base tracking-tight">Hapus Entri Personel?</h3>
         <p class="text-xs text-slate-500 mt-1 leading-relaxed">
-          Kamu akan menghapus <span id="delMemberName" class="font-bold text-slate-800"></span>. Baris di spreadsheet dan foto di Drive akan ikut terhapus.
+          Tindakan ini akan menghapus data <span id="delMemberName" class="font-bold text-slate-900"></span> dari spreadsheet dan memindahkan berkas foto di Google Drive ke tempat sampah.
         </p>
       </div>
       <input type="hidden" id="delRowIndex">
       <input type="hidden" id="delTargetNama">
 
-      <div class="flex gap-2 pt-1">
-        <button type="button" id="btnCancelDelete" class="flex-1 py-2 rounded-xl border border-slate-200 text-slate-700 text-xs font-semibold hover:bg-slate-100 transition">Batal</button>
-        <button type="button" id="btnConfirmDelete" class="flex-1 py-2 rounded-xl bg-rose-600 hover:bg-rose-700 text-white text-xs font-semibold shadow-md shadow-rose-100 transition">Hapus</button>
+      <div class="flex gap-2 pt-2">
+        <button type="button" id="btnCancelDelete" class="flex-1 py-2 rounded-lg border border-slate-200 text-slate-700 text-xs font-semibold hover:bg-slate-50 transition">Batal</button>
+        <button type="button" id="btnConfirmDelete" class="flex-1 py-2 rounded-lg bg-rose-600 hover:bg-rose-700 text-white text-xs font-semibold shadow-subtle transition">Konfirmasi Hapus</button>
       </div>
     </div>
   </div>
 
-  <!-- Modal: Hapus Aset Desain -->
-  <div id="modalDeleteAsset" class="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-sm hidden items-center justify-center p-4 overflow-y-auto">
-    <div class="bg-white rounded-2xl max-w-sm w-full border border-rose-100 shadow-2xl overflow-hidden p-5 sm:p-6 text-center space-y-3.5">
-      <div class="w-11 h-11 rounded-2xl bg-rose-50 text-rose-600 flex items-center justify-center mx-auto border border-rose-100">
+  <!-- Modal: Konfirmasi Hapus Aset Desain -->
+  <div id="modalDeleteAsset" class="fixed inset-0 z-50 bg-slate-900/50 backdrop-blur-sm hidden items-center justify-center p-4 overflow-y-auto">
+    <div class="bg-white rounded-2xl max-w-sm w-full border border-slate-200 shadow-elevated overflow-hidden p-5 text-center space-y-3.5">
+      <div class="w-10 h-10 rounded-xl bg-rose-50 text-rose-600 flex items-center justify-center mx-auto border border-rose-100">
         <i data-lucide="trash-2" class="w-5 h-5"></i>
       </div>
       <div>
-        <h3 class="font-extrabold text-slate-900 text-base">Hapus Aset Ini?</h3>
+        <h3 class="font-bold text-slate-900 text-base tracking-tight">Hapus Berkas Aset?</h3>
         <p class="text-xs text-slate-500 mt-1 leading-relaxed">
-          Aset <span id="delAssetName" class="font-bold text-slate-800"></span> akan dihapus dari sheet dan file di Drive akan dibersihkan.
+          Berkas <span id="delAssetName" class="font-bold text-slate-900"></span> akan dihapus dari katalog direktori dan penyimpanan cloud.
         </p>
       </div>
       <input type="hidden" id="delAssetRowIndex">
 
-      <div class="flex gap-2 pt-1">
-        <button type="button" id="btnCancelDeleteAsset" class="flex-1 py-2 rounded-xl border border-slate-200 text-slate-700 text-xs font-semibold hover:bg-slate-100 transition">Batal</button>
-        <button type="button" id="btnConfirmDeleteAsset" class="flex-1 py-2 rounded-xl bg-rose-600 hover:bg-rose-700 text-white text-xs font-semibold shadow-md shadow-rose-100 transition">Hapus</button>
+      <div class="flex gap-2 pt-2">
+        <button type="button" id="btnCancelDeleteAsset" class="flex-1 py-2 rounded-lg border border-slate-200 text-slate-700 text-xs font-semibold hover:bg-slate-50 transition">Batal</button>
+        <button type="button" id="btnConfirmDeleteAsset" class="flex-1 py-2 rounded-lg bg-rose-600 hover:bg-rose-700 text-white text-xs font-semibold shadow-subtle transition">Konfirmasi Hapus</button>
       </div>
     </div>
   </div>
 
-  <!-- Toast Notification (Mobile Centered) -->
-  <div id="toast" class="fixed bottom-4 left-4 right-4 sm:left-auto sm:right-6 sm:bottom-6 z-50 transform translate-y-20 opacity-0 transition-all duration-300 pointer-events-auto flex items-center gap-2 px-4 py-3 rounded-xl shadow-xl border">
+  <!-- Corporate Toast Alert -->
+  <div id="toast" class="fixed bottom-5 right-5 z-50 transform translate-y-20 opacity-0 transition-all duration-200 pointer-events-auto flex items-center gap-2.5 px-4 py-3 rounded-xl shadow-elevated border text-xs font-semibold tracking-tight">
     <i id="toastIcon" data-lucide="check-circle" class="w-4 h-4 flex-shrink-0"></i>
-    <span id="toastMsg" class="text-xs font-bold truncate"></span>
+    <span id="toastMsg" class="truncate"></span>
   </div>
 
-  <!-- JavaScript Logic -->
+  <!-- Enterprise Logic Script -->
   <script>
     const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwEw4os4qd4XhDJBIu7amXU3NSIeCs9DAox1x8C-cdGp4j3QM9cOt7H-cxzzbeXRJ_X/exec';
     
@@ -650,16 +716,16 @@
       setupEventListeners();
     });
 
-    // Fungsi Langsung Simpan ke Perangkat (Bypass App Google Drive di HP)
+    // Direct Blob Downloader to bypass mobile app intercepts
     async function downloadFileDirect(url, fileName) {
       if (!url || url === '#' || url.trim() === '') {
-        showToast('Link file tidak ditemukan', 'error');
+        showToast('Tautan berkas tidak tersedia', 'error');
         return;
       }
-      showToast('Memulai download file...', 'success');
+      showToast('Mengunduh berkas langsung...', 'success');
       try {
         const response = await fetch(url);
-        if (!response.ok) throw new Error('Respon jaringan gagal');
+        if (!response.ok) throw new Error('Respon server gagal');
         const blob = await response.blob();
         const blobUrl = window.URL.createObjectURL(blob);
         const a = document.createElement('a');
@@ -671,10 +737,10 @@
         setTimeout(() => {
           window.URL.revokeObjectURL(blobUrl);
           document.body.removeChild(a);
-        }, 150);
-        showToast('File berhasil disimpan ke perangkat!', 'success');
+        }, 200);
+        showToast('Berkas berhasil disimpan ke perangkat', 'success');
       } catch (error) {
-        console.error('Blob download fallback:', error);
+        console.error('Download fallback triggered:', error);
         window.open(url, '_blank');
       }
     }
@@ -689,8 +755,8 @@
 
       btnMembers.addEventListener('click', () => {
         currentTab = 'members';
-        btnMembers.className = 'flex-1 flex items-center justify-center gap-1.5 py-1.5 sm:py-2 px-3 rounded-xl text-xs sm:text-sm font-bold transition bg-emerald-600 text-white shadow-sm shadow-emerald-200';
-        btnAssets.className = 'flex-1 flex items-center justify-center gap-1.5 py-1.5 sm:py-2 px-3 rounded-xl text-xs sm:text-sm font-bold transition text-slate-600 hover:text-emerald-800 hover:bg-white/60';
+        btnMembers.className = 'inline-flex items-center gap-2 px-3.5 py-1.5 rounded-lg text-xs font-semibold transition bg-white text-slate-900 shadow-sm border border-slate-200/50';
+        btnAssets.className = 'inline-flex items-center gap-2 px-3.5 py-1.5 rounded-lg text-xs font-semibold transition text-slate-600 hover:text-slate-900 hover:bg-white/50';
         viewMembers.classList.remove('hidden');
         viewAssets.classList.add('hidden');
         memberHeader.classList.remove('hidden');
@@ -701,8 +767,8 @@
 
       btnAssets.addEventListener('click', () => {
         currentTab = 'assets';
-        btnAssets.className = 'flex-1 flex items-center justify-center gap-1.5 py-1.5 sm:py-2 px-3 rounded-xl text-xs sm:text-sm font-bold transition bg-emerald-600 text-white shadow-sm shadow-emerald-200';
-        btnMembers.className = 'flex-1 flex items-center justify-center gap-1.5 py-1.5 sm:py-2 px-3 rounded-xl text-xs sm:text-sm font-bold transition text-slate-600 hover:text-emerald-800 hover:bg-white/60';
+        btnAssets.className = 'inline-flex items-center gap-2 px-3.5 py-1.5 rounded-lg text-xs font-semibold transition bg-white text-slate-900 shadow-sm border border-slate-200/50';
+        btnMembers.className = 'inline-flex items-center gap-2 px-3.5 py-1.5 rounded-lg text-xs font-semibold transition text-slate-600 hover:text-slate-900 hover:bg-white/50';
         viewAssets.classList.remove('hidden');
         viewMembers.classList.add('hidden');
         assetHeader.classList.remove('hidden');
@@ -722,37 +788,40 @@
         if (json.success) {
           allMembers = json.members || json.data || [];
           allAssets = json.assets || [];
-          updateCounters();
+          updateDashboardMetrics();
           populateFilters(allMembers);
           filterMembers();
           renderAssets(allAssets);
         } else {
-          showToast('Format respon script tidak sesuai', 'error');
+          showToast('Respon server tidak valid', 'error');
         }
       } catch (err) {
         console.error(err);
-        showToast('Gagal memuat data, cek koneksi internet!', 'error');
+        showToast('Koneksi sinkronisasi terputus', 'error');
       } finally {
         refreshIcon.classList.remove('animate-spin');
       }
     }
 
-    function updateCounters() {
+    function updateDashboardMetrics() {
       document.getElementById('memberCountBadge').innerText = allMembers.length;
       document.getElementById('assetCountBadge').innerText = allAssets.length;
+      document.getElementById('metricTotalMembers').innerText = allMembers.length + ' Data';
+      document.getElementById('metricPhotoMembers').innerText = allMembers.filter(m => Boolean(m.viewUrl)).length + ' File';
+      document.getElementById('metricTotalAssets').innerText = allAssets.length + ' Item';
     }
 
-    // Render Kartu Anggota
+    // Render Modern Corporate Member Cards
     function renderMembers(data) {
       const container = document.getElementById('membersContainer');
       container.innerHTML = '';
 
       if (data.length === 0) {
         container.innerHTML = `
-          <div class="col-span-full py-14 text-center space-y-2">
-            <i data-lucide="inbox" class="w-10 h-10 sm:w-12 sm:h-12 text-slate-300 mx-auto"></i>
-            <p class="text-xs sm:text-sm font-bold text-slate-600">Tidak ada anggota yang cocok</p>
-            <p class="text-[11px] text-slate-400">Coba ganti kata kunci pencarian, divisi, atau periode.</p>
+          <div class="col-span-full py-16 text-center space-y-2 bg-white rounded-2xl border border-dashed border-slate-200">
+            <i data-lucide="folder-search" class="w-8 h-8 text-slate-300 mx-auto"></i>
+            <p class="text-sm font-semibold text-slate-700">Tidak ada data personel yang cocok</p>
+            <p class="text-xs text-slate-400">Sesuaikan kata kunci pencarian atau bersihkan filter direktorat.</p>
           </div>
         `;
         lucide.createIcons();
@@ -761,7 +830,7 @@
 
       data.forEach((member) => {
         const card = document.createElement('div');
-        card.className = "bg-white rounded-2xl border border-emerald-100 overflow-hidden shadow-sm hover:shadow-md transition flex flex-col group hover:border-emerald-300 relative";
+        card.className = "bg-white rounded-2xl border border-slate-200/80 hover:border-slate-300 overflow-hidden shadow-card hover:shadow-elevated transition duration-200 flex flex-col group";
 
         const hasPhoto = Boolean(member.viewUrl);
         const initials = member.nama.split(' ').map(n => n[0]).slice(0, 2).join('').toUpperCase();
@@ -775,124 +844,127 @@
         const encUni = encodeURIComponent(memberUni);
         const downloadTargetUrl = member.viewUrl || member.downloadUrl || '';
 
-        let mediaHtml = '';
+        let photoVisual = '';
         if (hasPhoto) {
-          mediaHtml = `
-            <div class="relative w-full aspect-[4/5] bg-slate-100 overflow-hidden">
+          photoVisual = `
+            <div class="relative w-full aspect-[4/5] bg-slate-100 overflow-hidden border-b border-slate-100">
               <img 
                 src="${member.viewUrl}" 
                 alt="${member.nama}" 
-                class="w-full h-full object-cover group-hover:scale-105 transition duration-300"
-                onerror="this.src='https://via.placeholder.com/400x500?text=Foto+Tidak+Tersedia'"
+                class="w-full h-full object-cover group-hover:scale-[1.02] transition duration-300"
+                onerror="this.src='https://via.placeholder.com/400x500?text=Berkas+Foto+Tidak+Tersedia'"
                 loading="lazy"
               >
-              <span class="absolute top-2.5 left-2.5 bg-emerald-900/80 backdrop-blur-md text-emerald-100 text-[10px] font-bold px-2 py-0.5 rounded-full border border-white/10 uppercase tracking-wider max-w-[65%] truncate">
+              <div class="absolute inset-0 bg-gradient-to-t from-slate-950/40 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+              
+              <span class="absolute top-3 left-3 bg-slate-900/80 backdrop-blur-md text-white text-[10px] font-medium px-2 py-0.5 rounded-md border border-white/10 uppercase tracking-wider max-w-[70%] truncate font-mono-tag">
                 ${member.divisi}
               </span>
-              <span class="absolute top-2.5 right-2.5 bg-white/95 backdrop-blur-md text-emerald-900 text-[10px] font-extrabold px-1.5 py-0.5 rounded-md shadow-sm border border-emerald-200">
+              <span class="absolute top-3 right-3 bg-white/95 backdrop-blur-md text-slate-800 text-[10px] font-semibold px-1.5 py-0.5 rounded-md border border-slate-200/70 font-mono-tag shadow-subtle">
                 ${memberPeriode}
               </span>
             </div>
           `;
         } else {
-          mediaHtml = `
-            <div class="relative w-full aspect-[4/5] bg-gradient-to-br from-emerald-50 via-slate-50 to-emerald-100/50 flex flex-col items-center justify-center p-4 border-b border-emerald-50">
-              <span class="absolute top-2.5 left-2.5 bg-emerald-900/80 backdrop-blur-md text-emerald-100 text-[10px] font-bold px-2 py-0.5 rounded-full border border-white/10 uppercase tracking-wider max-w-[65%] truncate">
+          photoVisual = `
+            <div class="relative w-full aspect-[4/5] bg-slate-50 border-b border-slate-100 flex flex-col items-center justify-center p-4">
+              <span class="absolute top-3 left-3 bg-slate-900/80 backdrop-blur-md text-white text-[10px] font-medium px-2 py-0.5 rounded-md border border-white/10 uppercase tracking-wider max-w-[70%] truncate font-mono-tag">
                 ${member.divisi}
               </span>
-              <span class="absolute top-2.5 right-2.5 bg-white/95 backdrop-blur-md text-emerald-900 text-[10px] font-extrabold px-1.5 py-0.5 rounded-md shadow-sm border border-emerald-200">
+              <span class="absolute top-3 right-3 bg-white/95 backdrop-blur-md text-slate-800 text-[10px] font-semibold px-1.5 py-0.5 rounded-md border border-slate-200/70 font-mono-tag shadow-subtle">
                 ${memberPeriode}
               </span>
-              <div class="w-16 h-16 sm:w-20 sm:h-20 rounded-2xl bg-emerald-200/60 border border-emerald-300 text-emerald-800 font-extrabold text-xl sm:text-2xl flex items-center justify-center shadow-inner">
+              
+              <div class="w-16 h-16 rounded-2xl bg-white border border-slate-200/80 text-slate-700 font-bold text-xl flex items-center justify-center shadow-subtle">
                 ${initials}
               </div>
-              <span class="mt-2.5 text-[10px] font-bold px-2 py-0.5 rounded-full bg-amber-100 text-amber-800 border border-amber-200">
-                Foto Belum Ada
+              <span class="mt-2.5 inline-flex items-center gap-1 text-[10px] font-semibold px-2 py-0.5 rounded-md bg-amber-50 text-amber-700 border border-amber-200/60 font-mono-tag">
+                FOTO BELUM ADA
               </span>
             </div>
           `;
         }
 
         card.innerHTML = `
-          ${mediaHtml}
+          ${photoVisual}
 
-          <div class="p-3.5 sm:p-4 flex-1 flex flex-col justify-between space-y-3">
+          <div class="p-4 flex-1 flex flex-col justify-between space-y-3.5">
             <div>
-              <h4 class="font-extrabold text-slate-900 text-sm leading-snug line-clamp-2" title="${member.nama}">
+              <h4 class="font-bold text-slate-900 text-sm leading-snug line-clamp-1" title="${member.nama}">
                 ${member.nama}
               </h4>
               
-              <div class="mt-2 space-y-1">
-                <div class="inline-flex items-center gap-1 px-2 py-0.5 rounded-md bg-emerald-50 border border-emerald-200 text-emerald-800 text-[11px] font-bold tracking-wide">
-                  <i data-lucide="user-check" class="w-3 h-3 text-emerald-600"></i>
-                  <span>${memberRole}</span>
+              <div class="mt-2 space-y-1.5">
+                <div class="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-md bg-emerald-50 text-emerald-800 border border-emerald-200/60 text-[11px] font-semibold tracking-tight">
+                  <i data-lucide="shield-check" class="w-3 h-3 text-emerald-600"></i>
+                  <span class="truncate max-w-[200px]">${memberRole}</span>
                 </div>
                 
-                <p class="text-xs font-semibold text-slate-700 flex items-center gap-1.5 pt-0.5" title="Instansi: ${memberUni}">
-                  <i data-lucide="graduation-cap" class="w-3.5 h-3.5 text-emerald-600 flex-shrink-0"></i>
+                <p class="text-xs text-slate-600 flex items-center gap-1.5 pt-0.5" title="Instansi: ${memberUni}">
+                  <i data-lucide="graduation-cap" class="w-3.5 h-3.5 text-slate-400 flex-shrink-0"></i>
                   <span class="truncate">${memberUni}</span>
                 </p>
 
-                <p class="text-[11px] font-medium text-slate-500 flex items-center gap-1.5" title="${member.divisi}">
-                  <i data-lucide="briefcase" class="w-3.5 h-3.5 text-slate-400 flex-shrink-0"></i>
+                <p class="text-[11px] text-slate-500 flex items-center gap-1.5" title="Unit: ${member.divisi}">
+                  <i data-lucide="briefcase" class="w-3 h-3 text-slate-400 flex-shrink-0"></i>
                   <span class="truncate">${member.divisi}</span>
                 </p>
               </div>
             </div>
 
-            <!-- Tombol Aksi Lengkap -->
-            <div class="space-y-1.5 pt-2 border-t border-slate-100">
+            <!-- Action Controls Strip -->
+            <div class="space-y-1.5 pt-2.5 border-t border-slate-100">
+              <!-- Primary Action: Copy Full Name -->
               <button 
                 onclick="copyEncodedText('${encNama}', 'Nama')" 
-                class="w-full flex items-center justify-center gap-1.5 py-1.5 px-3 rounded-lg bg-emerald-50 hover:bg-emerald-100 text-emerald-800 text-xs font-bold transition active:scale-95"
+                class="w-full flex items-center justify-center gap-1.5 py-1.5 px-3 rounded-lg bg-slate-900 hover:bg-slate-800 text-white text-xs font-semibold transition active:scale-[0.98] shadow-subtle"
               >
-                <i data-lucide="copy" class="w-3.5 h-3.5"></i>
-                <span>Salin Nama</span>
+                <i data-lucide="copy" class="w-3.5 h-3.5 text-emerald-400"></i>
+                <span>Salin Nama Resmi</span>
               </button>
 
+              <!-- Secondary Field Copy Strip -->
               <div class="grid grid-cols-3 gap-1">
                 <button 
                   onclick="copyEncodedText('${encRole}', 'Role')" 
-                  class="flex items-center justify-center gap-1 py-1.5 px-1 rounded-lg bg-emerald-100/60 hover:bg-emerald-100 text-emerald-900 text-[10px] font-bold transition active:scale-95"
-                  title="Salin Role"
+                  class="flex items-center justify-center gap-1 py-1 px-1.5 rounded-md bg-slate-50 hover:bg-slate-100 border border-slate-200 text-slate-700 text-[10px] font-semibold transition active:scale-95"
+                  title="Salin Role / Jabatan"
                 >
-                  <i data-lucide="copy" class="w-3 h-3 text-emerald-700"></i>
                   <span>Role</span>
                 </button>
 
                 <button 
                   onclick="copyEncodedText('${encDivisi}', 'Direktorat')" 
-                  class="flex items-center justify-center gap-1 py-1.5 px-1 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-700 text-[10px] font-semibold transition active:scale-95"
-                  title="Salin Direktorat"
+                  class="flex items-center justify-center gap-1 py-1 px-1.5 rounded-md bg-slate-50 hover:bg-slate-100 border border-slate-200 text-slate-700 text-[10px] font-semibold transition active:scale-95"
+                  title="Salin Nama Direktorat"
                 >
-                  <i data-lucide="copy" class="w-3 h-3 text-slate-500"></i>
                   <span>Divisi</span>
                 </button>
 
                 <button 
                   onclick="copyEncodedText('${encUni}', 'Kampus/Instansi')" 
-                  class="flex items-center justify-center gap-1 py-1.5 px-1 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-700 text-[10px] font-semibold transition active:scale-95"
+                  class="flex items-center justify-center gap-1 py-1 px-1.5 rounded-md bg-slate-50 hover:bg-slate-100 border border-slate-200 text-slate-700 text-[10px] font-semibold transition active:scale-95"
                   title="Salin Asal Kampus"
                 >
-                  <i data-lucide="copy" class="w-3 h-3 text-slate-500"></i>
                   <span>Kampus</span>
                 </button>
               </div>
 
-              <div class="flex gap-1.5 pt-0.5">
+              <!-- Management & Download Controls -->
+              <div class="flex items-center gap-1.5 pt-0.5">
                 <button 
                   onclick="openEditModal(${member.rowIndex})" 
-                  class="flex-1 flex items-center justify-center gap-1 py-1.5 px-2 rounded-lg bg-emerald-600 hover:bg-emerald-700 text-white text-[11px] font-semibold transition active:scale-95"
-                  title="Edit Data atau Upload Foto"
+                  class="flex-1 inline-flex items-center justify-center gap-1.5 py-1.5 px-2.5 rounded-lg bg-slate-100 hover:bg-slate-200/80 text-slate-700 text-[11px] font-semibold transition active:scale-95"
+                  title="Edit Data Personel"
                 >
-                  <i data-lucide="edit" class="w-3 h-3"></i>
+                  <i data-lucide="pen-square" class="w-3.5 h-3.5 text-slate-500"></i>
                   <span>Edit</span>
                 </button>
 
                 <button 
                   onclick="openDeleteModal(${member.rowIndex})" 
-                  class="min-w-[34px] min-h-[34px] rounded-lg bg-rose-50 hover:bg-rose-100 text-rose-600 border border-rose-200 text-[11px] font-semibold transition flex items-center justify-center px-2 active:scale-95"
-                  title="Hapus Anggota Ini"
+                  class="w-8 h-8 rounded-lg bg-slate-50 hover:bg-rose-50 text-slate-400 hover:text-rose-600 border border-slate-200 hover:border-rose-200 transition flex items-center justify-center active:scale-95 flex-shrink-0"
+                  title="Hapus Entri"
                 >
                   <i data-lucide="trash-2" class="w-3.5 h-3.5"></i>
                 </button>
@@ -900,8 +972,8 @@
                 ${hasPhoto ? `
                   <button 
                     onclick="downloadFileDirect('${downloadTargetUrl}', '${member.nama.replace(/'/g, "\\'").replace(/\s+/g, '_')}_HD.jpg')" 
-                    class="min-w-[34px] min-h-[34px] rounded-lg bg-slate-900 hover:bg-emerald-950 text-white text-[11px] font-semibold transition flex items-center justify-center px-2 active:scale-95"
-                    title="Unduh Foto Resolusi Asli"
+                    class="w-8 h-8 rounded-lg bg-slate-900 hover:bg-emerald-800 text-white transition flex items-center justify-center active:scale-95 flex-shrink-0 shadow-subtle"
+                    title="Unduh Berkas Foto HD"
                   >
                     <i data-lucide="download" class="w-3.5 h-3.5"></i>
                   </button>
@@ -916,17 +988,17 @@
       lucide.createIcons();
     }
 
-    // Render Aset Desain
+    // Render Modern Corporate Brand Asset Cards
     function renderAssets(data) {
       const container = document.getElementById('assetsContainer');
       container.innerHTML = '';
 
       if (data.length === 0) {
         container.innerHTML = `
-          <div class="col-span-full py-14 text-center space-y-2">
-            <i data-lucide="folder-search" class="w-10 h-10 sm:w-12 sm:h-12 text-slate-300 mx-auto"></i>
-            <p class="text-xs sm:text-sm font-bold text-slate-600">Belum ada aset desain yang cocok</p>
-            <p class="text-[11px] text-slate-400">Klik "Upload" di atas untuk menambahkan logo atau media kit.</p>
+          <div class="col-span-full py-16 text-center space-y-2 bg-white rounded-2xl border border-dashed border-slate-200">
+            <i data-lucide="folder-search" class="w-8 h-8 text-slate-300 mx-auto"></i>
+            <p class="text-sm font-semibold text-slate-700">Tidak ada aset desain yang ditemukan</p>
+            <p class="text-xs text-slate-400">Gunakan tombol "Upload Aset Baru" untuk menambahkan materi visual.</p>
           </div>
         `;
         lucide.createIcons();
@@ -935,34 +1007,34 @@
 
       data.forEach((asset) => {
         const card = document.createElement('div');
-        card.className = "bg-white rounded-2xl border border-emerald-100 overflow-hidden shadow-sm hover:shadow-md transition flex flex-col group hover:border-emerald-300 relative";
+        card.className = "bg-white rounded-2xl border border-slate-200/80 hover:border-slate-300 overflow-hidden shadow-card hover:shadow-elevated transition duration-200 flex flex-col group";
 
         const isImg = asset.viewUrl && (asset.format.toUpperCase().includes('PNG') || asset.format.toUpperCase().includes('JPG') || asset.format.toUpperCase().includes('SVG'));
         const encNama = encodeURIComponent(asset.nama);
         const downloadTargetUrl = asset.viewUrl || asset.downloadUrl || '';
 
-        let previewHtml = '';
+        let previewVisual = '';
         if (isImg) {
-          previewHtml = `
-            <div class="relative w-full aspect-video bg-gradient-to-br from-slate-100 to-slate-200 p-4 sm:p-6 flex items-center justify-center overflow-hidden border-b border-slate-100">
+          previewVisual = `
+            <div class="relative w-full aspect-video transparent-pattern p-5 flex items-center justify-center overflow-hidden border-b border-slate-100">
               <img 
                 src="${asset.viewUrl}" 
                 alt="${asset.nama}" 
                 class="max-h-full max-w-full object-contain group-hover:scale-105 transition duration-300"
                 loading="lazy"
               >
-              <span class="absolute top-2.5 right-2.5 bg-slate-900/80 backdrop-blur-md text-white text-[10px] font-extrabold px-1.5 py-0.5 rounded-md uppercase">
+              <span class="absolute top-2.5 right-2.5 bg-slate-900/85 backdrop-blur-sm text-white text-[10px] font-bold px-1.5 py-0.5 rounded font-mono-tag">
                 ${asset.format}
               </span>
             </div>
           `;
         } else {
-          previewHtml = `
-            <div class="relative w-full aspect-video bg-emerald-50/60 p-4 sm:p-6 flex flex-col items-center justify-center border-b border-emerald-100">
-              <div class="w-10 h-10 sm:w-12 sm:h-12 rounded-xl bg-emerald-600 text-white flex items-center justify-center shadow-sm">
-                <i data-lucide="file-archive" class="w-5 h-5 sm:w-6 sm:h-6"></i>
+          previewVisual = `
+            <div class="relative w-full aspect-video bg-slate-50 p-5 flex flex-col items-center justify-center border-b border-slate-100">
+              <div class="w-10 h-10 rounded-xl bg-slate-900 text-white flex items-center justify-center shadow-subtle">
+                <i data-lucide="file-code" class="w-5 h-5 text-emerald-400"></i>
               </div>
-              <span class="absolute top-2.5 right-2.5 bg-emerald-900 text-white text-[10px] font-extrabold px-1.5 py-0.5 rounded-md uppercase">
+              <span class="absolute top-2.5 right-2.5 bg-slate-900 text-white text-[10px] font-bold px-1.5 py-0.5 rounded font-mono-tag">
                 ${asset.format}
               </span>
             </div>
@@ -970,14 +1042,14 @@
         }
 
         card.innerHTML = `
-          ${previewHtml}
+          ${previewVisual}
 
-          <div class="p-3.5 sm:p-4 flex-1 flex flex-col justify-between space-y-3">
+          <div class="p-4 flex-1 flex flex-col justify-between space-y-3.5">
             <div>
-              <span class="inline-block text-[10px] font-bold px-2 py-0.5 rounded-md bg-emerald-50 text-emerald-800 border border-emerald-200 mb-1 uppercase">
+              <span class="inline-block text-[10px] font-semibold px-2 py-0.5 rounded-md bg-slate-100 text-slate-700 border border-slate-200/60 uppercase font-mono-tag mb-1.5">
                 ${asset.kategori}
               </span>
-              <h4 class="font-extrabold text-slate-900 text-sm leading-snug line-clamp-2" title="${asset.nama}">
+              <h4 class="font-bold text-slate-900 text-sm leading-snug line-clamp-2" title="${asset.nama}">
                 ${asset.nama}
               </h4>
             </div>
@@ -985,24 +1057,24 @@
             <div class="pt-2 border-t border-slate-100 flex items-center gap-1.5">
               <button 
                 onclick="downloadFileDirect('${downloadTargetUrl}', '${asset.nama.replace(/'/g, "\\'").replace(/\s+/g, '_')}.${(asset.format || 'png').toLowerCase()}')" 
-                class="flex-1 flex items-center justify-center gap-1.5 py-1.5 px-3 rounded-lg bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold transition active:scale-95"
-                title="Download Aset HD"
+                class="flex-1 inline-flex items-center justify-center gap-1.5 py-1.5 px-3 rounded-lg bg-slate-900 hover:bg-slate-800 text-white text-xs font-semibold transition active:scale-[0.98] shadow-subtle"
+                title="Unduh Aset Asli"
               >
-                <i data-lucide="download" class="w-3.5 h-3.5"></i>
-                <span>Download</span>
+                <i data-lucide="download" class="w-3.5 h-3.5 text-emerald-400"></i>
+                <span>Unduh Berkas</span>
               </button>
 
               <button 
                 onclick="copyEncodedText('${encodeURIComponent(downloadTargetUrl)}', 'Link Aset')" 
-                class="min-w-[34px] min-h-[34px] rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-700 transition flex items-center justify-center active:scale-95"
-                title="Salin Tautan Download"
+                class="w-8 h-8 rounded-lg bg-slate-50 hover:bg-slate-100 text-slate-600 border border-slate-200 transition flex items-center justify-center active:scale-95 flex-shrink-0"
+                title="Salin Tautan Langsung"
               >
                 <i data-lucide="link" class="w-3.5 h-3.5"></i>
               </button>
 
               <button 
                 onclick="openDeleteAssetModal(${asset.rowIndex}, '${encNama}')" 
-                class="min-w-[34px] min-h-[34px] rounded-lg bg-rose-50 hover:bg-rose-100 text-rose-600 border border-rose-200 transition flex items-center justify-center active:scale-95"
+                class="w-8 h-8 rounded-lg bg-slate-50 hover:bg-rose-50 text-slate-400 hover:text-rose-600 border border-slate-200 hover:border-rose-200 transition flex items-center justify-center active:scale-95 flex-shrink-0"
                 title="Hapus Aset"
               >
                 <i data-lucide="trash-2" class="w-3.5 h-3.5"></i>
@@ -1082,9 +1154,9 @@
     window.copyEncodedText = function(encodedText, type) {
       const text = decodeURIComponent(encodedText);
       navigator.clipboard.writeText(text).then(() => {
-        showToast(`${type} berhasil disalin!`, 'success');
+        showToast(`${type} berhasil disalin`, 'success');
       }).catch(() => {
-        showToast('Gagal menyalin teks', 'error');
+        showToast('Gagal menyalin data', 'error');
       });
     };
 
@@ -1095,11 +1167,11 @@
 
       toastMsg.innerText = msg;
       if (type === 'success') {
-        toast.className = 'fixed bottom-4 left-4 right-4 sm:left-auto sm:right-6 sm:bottom-6 z-50 transform translate-y-0 opacity-100 transition-all duration-300 pointer-events-auto flex items-center gap-2 px-4 py-3 rounded-xl shadow-xl bg-slate-900 text-white border border-slate-700';
-        toastIcon.setAttribute('data-lucide', 'check-circle');
+        toast.className = 'fixed bottom-5 right-5 z-50 transform translate-y-0 opacity-100 transition-all duration-200 pointer-events-auto flex items-center gap-2.5 px-4 py-3 rounded-xl shadow-elevated bg-slate-900 text-white border border-slate-800 text-xs font-semibold tracking-tight';
+        toastIcon.setAttribute('data-lucide', 'check');
         toastIcon.className = 'w-4 h-4 text-emerald-400 flex-shrink-0';
       } else {
-        toast.className = 'fixed bottom-4 left-4 right-4 sm:left-auto sm:right-6 sm:bottom-6 z-50 transform translate-y-0 opacity-100 transition-all duration-300 pointer-events-auto flex items-center gap-2 px-4 py-3 rounded-xl shadow-xl bg-rose-600 text-white border border-rose-500';
+        toast.className = 'fixed bottom-5 right-5 z-50 transform translate-y-0 opacity-100 transition-all duration-200 pointer-events-auto flex items-center gap-2.5 px-4 py-3 rounded-xl shadow-elevated bg-rose-600 text-white border border-rose-500 text-xs font-semibold tracking-tight';
         toastIcon.setAttribute('data-lucide', 'alert-circle');
         toastIcon.className = 'w-4 h-4 text-white flex-shrink-0';
       }
@@ -1108,7 +1180,7 @@
       setTimeout(() => {
         toast.classList.remove('translate-y-0', 'opacity-100');
         toast.classList.add('translate-y-20', 'opacity-0');
-      }, 3000);
+      }, 2800);
     }
 
     window.openEditModal = function(rowIndex) {
@@ -1248,7 +1320,7 @@
       document.getElementById('btnCancelDeleteAsset').addEventListener('click', closeDeleteAsset);
       document.getElementById('btnConfirmDeleteAsset').addEventListener('click', handleConfirmDeleteAsset);
 
-      // Dropzone Tambah
+      // File Dropzones
       const dropZone = document.getElementById('dropZone');
       const inputFile = document.getElementById('inputFile');
       dropZone.addEventListener('click', () => inputFile.click());
@@ -1261,7 +1333,6 @@
       });
       document.getElementById('formAddMember').addEventListener('submit', handleAddFormSubmit);
 
-      // Dropzone Edit
       const dropZoneEdit = document.getElementById('dropZoneEdit');
       const inputFileEdit = document.getElementById('inputFileEdit');
       dropZoneEdit.addEventListener('click', () => inputFileEdit.click());
@@ -1273,7 +1344,6 @@
         resetEditFileInput();
       });
 
-      // Dropzone Aset
       const dropZoneAsset = document.getElementById('dropZoneAsset');
       const inputFileAsset = document.getElementById('inputFileAsset');
       dropZoneAsset.addEventListener('click', () => inputFileAsset.click());
@@ -1351,33 +1421,33 @@
       const members = parseBulkText(text, defaultPeriode);
 
       if (members.length === 0) {
-        showToast('Masukkan minimal 1 baris nama!', 'error');
+        showToast('Masukkan minimal satu baris entri', 'error');
         return;
       }
 
       const btn = document.getElementById('btnSubmitBulk');
       const btnText = document.getElementById('bulkBtnText');
       btn.disabled = true;
-      btnText.innerText = 'Mengimpor...';
+      btnText.innerText = 'Memproses Entri...';
 
       try {
         const payload = { action: 'bulk', members: members };
         const res = await fetch(SCRIPT_URL, { method: 'POST', body: JSON.stringify(payload) });
         const json = await res.json();
         if (json.success) {
-          showToast(json.message || 'Berhasil mengimpor!', 'success');
+          showToast(json.message || 'Import data berhasil diproses', 'success');
           document.getElementById('modalBulk').classList.add('hidden');
           document.getElementById('modalBulk').classList.remove('flex');
           loadData();
         } else {
-          showToast('Gagal: ' + (json.error || 'Server error'), 'error');
+          showToast('Gagal: ' + (json.error || 'Kesalahan sistem'), 'error');
         }
       } catch (err) {
         console.error(err);
-        showToast('Koneksi ke Apps Script gagal!', 'error');
+        showToast('Gagal terhubung ke Apps Script', 'error');
       } finally {
         btn.disabled = false;
-        btnText.innerText = 'Mulai Import';
+        btnText.innerText = 'Mulai Proses Import';
       }
     }
 
@@ -1393,19 +1463,19 @@
         const res = await fetch(SCRIPT_URL, { method: 'POST', body: JSON.stringify(payload) });
         const json = await res.json();
         if (json.success) {
-          showToast('Anggota berhasil dihapus!', 'success');
+          showToast('Data personel berhasil dihapus', 'success');
           document.getElementById('modalDelete').classList.add('hidden');
           document.getElementById('modalDelete').classList.remove('flex');
           loadData();
         } else {
-          showToast('Gagal: ' + (json.error || 'Server error'), 'error');
+          showToast('Gagal: ' + (json.error || 'Kesalahan sistem'), 'error');
         }
       } catch (err) {
         console.error(err);
-        showToast('Koneksi ke server gagal!', 'error');
+        showToast('Gagal memproses penghapusan', 'error');
       } finally {
         btn.disabled = false;
-        btn.innerText = 'Hapus';
+        btn.innerText = 'Konfirmasi Hapus';
       }
     }
 
@@ -1442,19 +1512,19 @@
         const res = await fetch(SCRIPT_URL, { method: 'POST', body: JSON.stringify(payload) });
         const json = await res.json();
         if (json.success) {
-          showToast('Data & foto berhasil diperbarui!', 'success');
+          showToast('Informasi personel berhasil diperbarui', 'success');
           document.getElementById('modalEdit').classList.add('hidden');
           document.getElementById('modalEdit').classList.remove('flex');
           loadData();
         } else {
-          showToast('Gagal: ' + (json.error || 'Server error'), 'error');
+          showToast('Gagal: ' + (json.error || 'Kesalahan server'), 'error');
         }
       } catch (err) {
         console.error(err);
-        showToast('Koneksi gagal!', 'error');
+        showToast('Gagal memperbarui data', 'error');
       } finally {
         btn.disabled = false;
-        btnText.innerText = 'Simpan';
+        btnText.innerText = 'Simpan Perubahan';
       }
     }
 
@@ -1487,20 +1557,20 @@
         const res = await fetch(SCRIPT_URL, { method: 'POST', body: JSON.stringify(payload) });
         const json = await res.json();
         if (json.success) {
-          showToast('Anggota berhasil ditambahkan!', 'success');
+          showToast('Data personel berhasil ditambahkan', 'success');
           document.getElementById('modalAdd').classList.add('hidden');
           document.getElementById('modalAdd').classList.remove('flex');
           resetAddForm();
           loadData();
         } else {
-          showToast('Gagal: ' + (json.error || 'Server error'), 'error');
+          showToast('Gagal: ' + (json.error || 'Kesalahan sistem'), 'error');
         }
       } catch (err) {
         console.error(err);
-        showToast('Koneksi ke Apps Script gagal!', 'error');
+        showToast('Koneksi penyimpanan gagal', 'error');
       } finally {
         btnSubmit.disabled = false;
-        btnText.innerText = 'Simpan Data';
+        btnText.innerText = 'Simpan Entri';
       }
     }
 
@@ -1511,14 +1581,14 @@
       const format = document.getElementById('assetFormat').value.trim().toUpperCase();
 
       if (!assetFileBase64) {
-        showToast('Pilih file aset terlebih dahulu!', 'error');
+        showToast('Pilih berkas yang akan diunggah', 'error');
         return;
       }
 
       const btn = document.getElementById('btnSubmitAsset');
       const btnText = document.getElementById('submitAssetBtnText');
       btn.disabled = true;
-      btnText.innerText = 'Mengupload...';
+      btnText.innerText = 'Mengunggah Berkas...';
 
       try {
         const payload = {
@@ -1534,20 +1604,20 @@
         const res = await fetch(SCRIPT_URL, { method: 'POST', body: JSON.stringify(payload) });
         const json = await res.json();
         if (json.success) {
-          showToast('Aset desain berhasil disimpan ke Drive!', 'success');
+          showToast('Aset berhasil disimpan ke repositori', 'success');
           document.getElementById('modalAddAsset').classList.add('hidden');
           document.getElementById('modalAddAsset').classList.remove('flex');
           resetAssetForm();
           loadData();
         } else {
-          showToast('Gagal: ' + (json.error || 'Server error'), 'error');
+          showToast('Gagal: ' + (json.error || 'Kesalahan sistem'), 'error');
         }
       } catch (err) {
         console.error(err);
-        showToast('Koneksi gagal!', 'error');
+        showToast('Gagal mengunggah berkas', 'error');
       } finally {
         btn.disabled = false;
-        btnText.innerText = 'Simpan';
+        btnText.innerText = 'Simpan ke Repositori';
       }
     }
 
@@ -1562,26 +1632,25 @@
         const res = await fetch(SCRIPT_URL, { method: 'POST', body: JSON.stringify(payload) });
         const json = await res.json();
         if (json.success) {
-          showToast('Aset desain berhasil dihapus!', 'success');
+          showToast('Aset berhasil dihapus dari repositori', 'success');
           document.getElementById('modalDeleteAsset').classList.add('hidden');
           document.getElementById('modalDeleteAsset').classList.remove('flex');
           loadData();
         } else {
-          showToast('Gagal: ' + (json.error || 'Server error'), 'error');
+          showToast('Gagal: ' + (json.error || 'Kesalahan sistem'), 'error');
         }
       } catch (err) {
         console.error(err);
-        showToast('Koneksi gagal!', 'error');
+        showToast('Koneksi server gagal', 'error');
       } finally {
         btn.disabled = false;
-        btn.innerText = 'Hapus';
+        btn.innerText = 'Konfirmasi Hapus';
       }
     }
 
-    // File Helpers Anggota
     function handleAddFile(file) {
       if (!file.type.startsWith('image/')) {
-        showToast('File harus berupa gambar (JPG/PNG)', 'error');
+        showToast('Berkas harus berupa gambar (JPG/PNG)', 'error');
         return;
       }
       addFileName = file.name;
@@ -1614,7 +1683,7 @@
 
     function handleEditFile(file) {
       if (!file.type.startsWith('image/')) {
-        showToast('File harus berupa gambar (JPG/PNG)', 'error');
+        showToast('Berkas harus berupa gambar (JPG/PNG)', 'error');
         return;
       }
       editFileName = file.name;
@@ -1639,7 +1708,6 @@
       document.getElementById('uploadPreviewEdit').classList.add('hidden');
     }
 
-    // File Helpers Aset Desain
     function handleAssetFile(file) {
       assetFileName = file.name;
       assetMimeType = file.type || 'application/octet-stream';
