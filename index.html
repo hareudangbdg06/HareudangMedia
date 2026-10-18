@@ -103,7 +103,7 @@
     </div>
   </header>
 
-  <!-- Segmented Tab Switcher (Mobile App Style) -->
+  <!-- Segmented Tab Switcher -->
   <div class="bg-white/90 backdrop-blur-md border-b border-emerald-100 sticky top-14 sm:top-16 z-30 py-2">
     <div class="max-w-7xl mx-auto px-3.5 sm:px-6 lg:px-8">
       <div class="bg-slate-100/90 p-1 rounded-2xl flex items-center gap-1 max-w-md mx-auto sm:mx-0">
@@ -147,7 +147,6 @@
 
       <!-- Toolbar Anggota Mobile-Friendly -->
       <div class="bg-white p-3 sm:p-4 rounded-2xl border border-emerald-100 shadow-sm flex flex-col md:flex-row gap-2.5 sm:gap-3 items-stretch md:items-center justify-between">
-        <!-- Search Input Full Width on Mobile -->
         <div class="relative flex-1 md:max-w-xs">
           <i data-lucide="search" class="w-4 h-4 text-emerald-600 absolute left-3 top-1/2 -translate-y-1/2"></i>
           <input 
@@ -158,7 +157,6 @@
           >
         </div>
 
-        <!-- Filter Controls (Grid Rapi di HP) -->
         <div class="grid grid-cols-[auto_1fr_auto] gap-2 items-center">
           <select id="periodFilter" class="px-2.5 py-2 bg-emerald-50/40 border border-emerald-200 rounded-xl text-xs font-bold text-slate-700 focus:outline-none focus:ring-2 focus:ring-emerald-500">
             <option value="ALL">Semua Periode</option>
@@ -299,7 +297,7 @@
     <option value="Poltekkes Kemenkes Bandung"></option>
   </datalist>
 
-  <!-- Modal: Tambah Anggota Satuan (Bottom-Sheet di HP) -->
+  <!-- Modal: Tambah Anggota Satuan -->
   <div id="modalAdd" class="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-sm hidden items-end sm:items-center justify-center p-0 sm:p-4 overflow-y-auto">
     <div class="bg-white rounded-t-3xl sm:rounded-2xl max-w-lg w-full border border-emerald-100 shadow-2xl overflow-hidden max-h-[92vh] flex flex-col animate-in fade-in zoom-in-95 duration-150">
       <div class="px-5 py-3.5 border-b border-emerald-100 flex items-center justify-between bg-emerald-50/50 flex-shrink-0">
@@ -652,6 +650,35 @@
       setupEventListeners();
     });
 
+    // Fungsi Langsung Simpan ke Perangkat (Bypass App Google Drive di HP)
+    async function downloadFileDirect(url, fileName) {
+      if (!url || url === '#' || url.trim() === '') {
+        showToast('Link file tidak ditemukan', 'error');
+        return;
+      }
+      showToast('Memulai download file...', 'success');
+      try {
+        const response = await fetch(url);
+        if (!response.ok) throw new Error('Respon jaringan gagal');
+        const blob = await response.blob();
+        const blobUrl = window.URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.style.display = 'none';
+        a.href = blobUrl;
+        a.download = fileName;
+        document.body.appendChild(a);
+        a.click();
+        setTimeout(() => {
+          window.URL.revokeObjectURL(blobUrl);
+          document.body.removeChild(a);
+        }, 150);
+        showToast('File berhasil disimpan ke perangkat!', 'success');
+      } catch (error) {
+        console.error('Blob download fallback:', error);
+        window.open(url, '_blank');
+      }
+    }
+
     function setupTabs() {
       const btnMembers = document.getElementById('tabBtnMembers');
       const btnAssets = document.getElementById('tabBtnAssets');
@@ -746,6 +773,7 @@
         const encRole = encodeURIComponent(memberRole);
         const encDivisi = encodeURIComponent(member.divisi);
         const encUni = encodeURIComponent(memberUni);
+        const downloadTargetUrl = member.viewUrl || member.downloadUrl || '';
 
         let mediaHtml = '';
         if (hasPhoto) {
@@ -870,15 +898,13 @@
                 </button>
 
                 ${hasPhoto ? `
-                  <a 
-                    href="${member.downloadUrl}" 
-                    target="_blank" 
-                    download 
+                  <button 
+                    onclick="downloadFileDirect('${downloadTargetUrl}', '${member.nama.replace(/'/g, "\\'").replace(/\s+/g, '_')}_HD.jpg')" 
                     class="min-w-[34px] min-h-[34px] rounded-lg bg-slate-900 hover:bg-emerald-950 text-white text-[11px] font-semibold transition flex items-center justify-center px-2 active:scale-95"
                     title="Unduh Foto Resolusi Asli"
                   >
                     <i data-lucide="download" class="w-3.5 h-3.5"></i>
-                  </a>
+                  </button>
                 ` : ''}
               </div>
             </div>
@@ -913,7 +939,7 @@
 
         const isImg = asset.viewUrl && (asset.format.toUpperCase().includes('PNG') || asset.format.toUpperCase().includes('JPG') || asset.format.toUpperCase().includes('SVG'));
         const encNama = encodeURIComponent(asset.nama);
-        const downloadUrl = asset.downloadUrl || asset.viewUrl || '#';
+        const downloadTargetUrl = asset.viewUrl || asset.downloadUrl || '';
 
         let previewHtml = '';
         if (isImg) {
@@ -957,19 +983,17 @@
             </div>
 
             <div class="pt-2 border-t border-slate-100 flex items-center gap-1.5">
-              <a 
-                href="${downloadUrl}" 
-                target="_blank" 
-                download 
+              <button 
+                onclick="downloadFileDirect('${downloadTargetUrl}', '${asset.nama.replace(/'/g, "\\'").replace(/\s+/g, '_')}.${(asset.format || 'png').toLowerCase()}')" 
                 class="flex-1 flex items-center justify-center gap-1.5 py-1.5 px-3 rounded-lg bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold transition active:scale-95"
                 title="Download Aset HD"
               >
                 <i data-lucide="download" class="w-3.5 h-3.5"></i>
                 <span>Download</span>
-              </a>
+              </button>
 
               <button 
-                onclick="copyEncodedText('${encodeURIComponent(downloadUrl)}', 'Link Aset')" 
+                onclick="copyEncodedText('${encodeURIComponent(downloadTargetUrl)}', 'Link Aset')" 
                 class="min-w-[34px] min-h-[34px] rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-700 transition flex items-center justify-center active:scale-95"
                 title="Salin Tautan Download"
               >
